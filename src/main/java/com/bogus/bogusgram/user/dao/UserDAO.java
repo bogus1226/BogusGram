@@ -11,4 +11,10 @@ public interface UserDAO {
 			, @Param("name") String name
 			, @Param("nickname") String nickname
 			, @Param("password") String password);
+	
+	public int selectCountIsDuplicate(@Param("loginId") String loginId);
+	
+	public int selcetCountLoginCheck(
+			@Param("loginId") String loginId
+			, @Param("password") String password);
 }

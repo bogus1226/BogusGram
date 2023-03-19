@@ -13,4 +13,10 @@ public class UserContoller {
 		
 		return "user/signup";
 	}
+	
+	@GetMapping("/signin/view")
+	public String signinInput() {
+		
+		return "user/signin";
+	}
 }

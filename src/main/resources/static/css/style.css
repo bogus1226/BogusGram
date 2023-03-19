@@ -16,6 +16,16 @@ header {
 	background-color:rgb(250, 237, 188);
 }
 
+.login-box {
+	height:220px;
+	background-color:rgb(250, 237, 188);
+}
+
+#signupBtn:hover {
+	color:white;
+}
+
+
 footer {
 	height:70px;
 	color:rgb(158, 158, 158);

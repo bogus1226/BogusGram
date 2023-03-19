@@ -1,1 +1,124 @@
 @charset "UTF-8";
+
+#wrap {
+	width:1200px;
+	margin:auto;
+}
+
+header > .search {
+	height:90px;
+	width:340px;
+}
+
+input::placeholder {
+	font-size:small;
+}
+
+.searchBtn {
+	background-color:#d6d5d2;
+}
+
+header > .logo {
+	height:90px;
+	width:520px;
+	color:rgb(241, 196, 15);
+	font-size:40px;
+}
+
+header > .logInOut {
+	height:90px;
+	width:340px;
+}
+
+.logInOut > .login {
+	color:rgb(241, 196, 15);
+	font-weight:bold;
+	font-size:20px;
+}
+
+.main-contents > .navBtn {
+	width:320px;
+}
+
+.main-contents > .contents {
+	width:550px;
+}
+
+.contents > .postInputBox {
+	height:110px;
+}
+
+.uploadBtn {
+	background-color:rgb(243, 115, 102);
+	color:white;
+}
+
+.postInputBox > textarea {
+	width:100%;
+	border:none;
+	resize: none;
+	font-size:12px;
+}
+
+textarea::placeholder {
+	font-size:small;
+}
+
+.postInfoBoxHeader {
+	height:40px;
+	background-color:rgb(250, 237, 188);
+}
+
+.postInfoBoxHeader > .btn {
+	background-color:rgb(250, 237, 188);
+}
+
+.postImageBox > .postImage {
+	width:470px;
+	height:300px;
+	margin:auto;
+}
+
+.postImage > img {
+	width:100%;
+	height:100%;
+}
+
+.likeBtn {
+	background-color:#ffffff;
+}
+
+.postInfoContent {
+	width:460px;
+	margin:auto;
+}
+
+.comment {
+	width:460px;
+	margin:auto;
+}
+
+.comment > .comment-header {
+	height:40px;
+	background-color:rgb(250, 237, 188);
+}
+
+.commentSellectBtn {
+	background-color:rgb(250, 237, 188);
+}
+
+.commentBtn {
+	background-color:rgb(243, 115, 102);
+	color:white;	
+}
+
+
+footer {
+	height:70px;
+	color:rgb(158, 158, 158);
+}
+
+.navBtn > .btn {
+	background-color:rgb(243, 115, 102);
+	color:white;
+}

@@ -42,7 +42,11 @@ header > .logInOut {
 .logInOut > .login {
 	color:rgb(241, 196, 15);
 	font-weight:bold;
-	font-size:20px;
+	font-size:15px;
+}
+
+.logInOut > a {
+	text-decoration-line: none;
 }
 
 .main-contents > .navBtn {

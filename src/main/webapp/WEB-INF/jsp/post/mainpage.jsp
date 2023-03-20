@@ -24,11 +24,11 @@
 			</div>
 			
 			<div class="logo d-flex justify-content-center align-items-center">
-				<div><b>BogusGram</b></div>
+				<a href="/post/mainpage/view"><b>BogusGram</b></a>
 			</div>
 			
 			<div class="logInOut d-flex justify-content-end align-items-center pt-3">
-				<a class="login" href="#">로그인/회원가입</a>
+				<a class="login" href="/user/signin/view">로그인/회원가입</a>
 			</div>
 		</header>
 		

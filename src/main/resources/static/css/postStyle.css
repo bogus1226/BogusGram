@@ -25,6 +25,15 @@ header > .logo {
 	font-size:40px;
 }
 
+.logo > a {
+	color:rgb(241, 196, 15);
+}
+
+.logo > a:hover {
+	color:rgb(241, 196, 15);
+	text-decoration:none;
+}
+
 header > .logInOut {
 	height:90px;
 	width:340px;
@@ -114,8 +123,15 @@ textarea::placeholder {
 
 
 footer {
+	width:550px;
 	height:70px;
 	color:rgb(158, 158, 158);
+	margin:auto;
+}
+
+hr {
+	height:1px;
+	background-color:#c0c4c1;
 }
 
 .navBtn > .btn {

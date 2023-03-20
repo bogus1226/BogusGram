@@ -35,6 +35,11 @@
 			$("#isDuplicateBtn").on("click", function(){
 				let loginId = $("#loginIdInput").val();
 				
+				if(loginId == "") {
+					alert("아이디를 입력해주세요");
+					return;
+				}
+				
 				$.ajax({
 					type:"get"
 					, url:"/user/isDuplicate"

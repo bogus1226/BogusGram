@@ -11,6 +11,15 @@ header {
 	font-size:50px;
 }
 
+header > a {
+	color:rgb(241, 196, 15);
+}
+
+header > a:hover {
+	color:rgb(241, 196, 15);
+	text-decoration:none;
+}
+
 .join-box {
 	height:430px;
 	background-color:rgb(250, 237, 188);
@@ -29,6 +38,11 @@ header {
 footer {
 	height:70px;
 	color:rgb(158, 158, 158);
+}
+
+hr {
+	height:1px;
+	background-color:#c0c4c1;
 }
 
 .btn {

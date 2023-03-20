@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PostController {
 	
 	@GetMapping("/mainpage/view")
-	public String mainPage(				
-			@RequestParam(value = "id", defaultValue = "0") int id) {
+	public String mainPage() {
 		
 		return "post/mainpage";
 	}

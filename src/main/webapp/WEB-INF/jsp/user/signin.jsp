@@ -53,8 +53,8 @@
 					, url:"/user/signin"
 					, data:{"loginId":loginId, "password":password}
 					, success:function(data){
-						if(data.result) {
-							alert("로그인 성공")
+						if(data.result == "success") {
+							location.href = "/post/mainpage/view";
 						} else if(!data.idResult) {
 							alert("일치하는 아이디가 없습니다\n아이디를 확인해주세요");
 						} else if(data.idResult) {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bogus.bogusgram.common.EncryptService;
 import com.bogus.bogusgram.user.dao.UserDAO;
+import com.bogus.bogusgram.user.model.User;
 
 @Service
 public class UserBO {
@@ -30,12 +31,11 @@ public class UserBO {
 		return count != 0;
 	}
 	
-	public boolean loginCheck(String loginId, String password) {
+	public User loginCheck(String loginId, String password) {
 		
 		String encryptPassword = EncryptService.md5(password);
 		
-		int count = userDAO.selcetCountLoginCheck(loginId, encryptPassword);
+		return userDAO.selcetCountLoginCheck(loginId, encryptPassword);
 		
-		return count != 0;
 	}
 }

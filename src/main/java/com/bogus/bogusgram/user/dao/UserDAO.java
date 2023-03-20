@@ -3,6 +3,8 @@ package com.bogus.bogusgram.user.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.bogus.bogusgram.user.model.User;
+
 @Repository
 public interface UserDAO {
 
@@ -14,7 +16,7 @@ public interface UserDAO {
 	
 	public int selectCountIsDuplicate(@Param("loginId") String loginId);
 	
-	public int selcetCountLoginCheck(
+	public User selcetCountLoginCheck(
 			@Param("loginId") String loginId
 			, @Param("password") String password);
 }

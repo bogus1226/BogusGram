@@ -19,12 +19,14 @@
 		
 		<section class="login-box d-flex justify-content-center">
 			<div class="col-10 mt-3">
-				<input type="text" placeholder="아이디" class="form-control mt-4" id="loginIdInput">
-				<input type="password" placeholder="비밀번호" class="form-control mt-3" id="passwordInput">
-				<div class="d-flex justify-content-between">
-					<a id="signupBtn" class="btn mt-3" href="/user/signup/view">회원가입</a>
-					<button type="button" class="btn mt-3" id="loginBtn">로그인</button>
-				</div>
+				<form id="loginForm">
+					<input type="text" placeholder="아이디" class="form-control mt-4" id="loginIdInput">
+					<input type="password" placeholder="비밀번호" class="form-control mt-3" id="passwordInput">
+					<div class="d-flex justify-content-between">
+						<a id="signupBtn" class="btn mt-3" href="/user/signup/view">회원가입</a>
+						<button type="submit" class="btn mt-3" id="loginBtn">로그인</button>
+					</div>
+				</form>
 			</div>
 		</section>
 		
@@ -34,7 +36,11 @@
 	<script>
 		$(document).ready(function(){
 			
-			$("#loginBtn").on("click", function(){
+			$("#loginForm").on("submit", function(e){
+				
+				// 이벤트가 가진 고유 기능과 속성을 취소한다.
+				e.preventDefault(); // 페이지 이동 기능 삭제
+				
 				let loginId = $("#loginIdInput").val();
 				let password = $("#passwordInput").val();
 				

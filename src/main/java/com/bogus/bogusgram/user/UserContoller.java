@@ -28,7 +28,8 @@ public class UserContoller {
 		
 		HttpSession session = request.getSession();
         
-        session.invalidate();
+        session.removeAttribute("userId");
+        session.removeAttribute("userName");
         
         return "redirect:/post/mainpage/view"; 
 	}

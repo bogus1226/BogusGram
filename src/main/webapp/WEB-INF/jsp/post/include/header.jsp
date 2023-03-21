@@ -22,10 +22,10 @@
 					</c:when>
 					
 					<c:when test="${not empty userId}">
-						<div class="d-none">
+						<div>
 							<div class="d-flex logInOut">
-								<div class="login" id="userName" data-userId="${userId}">${userName}님 환영합니다.</div>
-								<a class="login ml-3" href="/user/signout" id="logoutBtn">로그아웃</a>
+								<div class="login" id="userName">${userName}님 환영합니다.</div>
+								<a class="login ml-3" href="/user/signout">로그아웃</a>
 							</div>
 						</div>
 					</c:when>

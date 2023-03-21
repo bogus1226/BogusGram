@@ -36,10 +36,17 @@
 					</div>
 				</div>
 				
-				<div class="postInfoBox">
+				<div class="postInfoBox mt-4">
 					<div class="postInfoBoxHeader mt-3 d-flex align-items-center justify-content-between">
 						<div class="nickname ml-2"><b>bogus</b></div>
-						<button type="button" class="btn"><img height="23" alt="4개의선이있는 아이콘" src="/static/image/four_line.png"></button>
+						<button type="button" class="btn hideBtn" data-hidebtn-check="0"><img height="23" alt="4개의선이있는 아이콘" src="/static/image/four_line.png"></button>
+					</div>
+					<div class="d-none hideBtns">
+						<div class="postBtns d-flex justify-content-end">
+							<button type="button" class="btn btn-sm mr-2">숨기기</button>
+							<button type="button" class="btn btn-sm mr-2">수정하기</button>
+							<button type="button" class="btn btn-sm">삭제하기</button>
+						</div>
 					</div>
 					
 					<div class="postInfo">
@@ -73,8 +80,9 @@
 						</div>
 					</div>
 				</div>
+	
 				
-			</section>
+			</section>	
 		</section>
 		
 		<c:import url="/WEB-INF/jsp/post/include/footer.jsp"/>
@@ -82,6 +90,21 @@
 	
 	<script>
 		$(document).ready(function(){
+			
+		
+		$(".hideBtn").on("click", function(){
+			let hideBtnCheck = $(this).data("hidebtn-check");
+			
+			if(hideBtnCheck == 0) {
+				$(".hideBtns").removeClass("d-none");	
+				$(this).data("hidebtn-check", "1");
+			} else {
+				$(".hideBtns").addClass("d-none");	
+				$(this).data("hidebtn-check", "0");
+			}
+		});
+
+			
 			
 			
 		});

@@ -31,6 +31,6 @@ public class UserContoller {
         session.removeAttribute("userId");
         session.removeAttribute("userName");
         
-        return "redirect:/post/mainpage/view"; 
+        return "redirect:/user/signin/view"; 
 	}
 }

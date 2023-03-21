@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<header class="d-flex">
 			<div class="search pt-2">
 				<div class="input-group col-8  p-0 mt-4">
@@ -15,12 +16,19 @@
 			</div>
 			
 			<div class="logInOut d-flex justify-content-end align-items-center pt-3">
-				<a id="loginClass" class="login" href="/user/signin/view">로그인/회원가입</a>
-				<div id="logoutClass" class="d-none">
-					<div class="d-flex logInOut">
-						<div class="login" id="userName" data-userId="${userId}">${userName}님 환영합니다.</div>
-						<a class="login ml-3" href="/user/signout" id="logoutBtn">로그아웃</a>
-					</div>
-				</div>
+				<c:choose>
+					<c:when test="${empty userId}">
+						<a class="login" href="/user/signin/view">로그인/회원가입</a>
+					</c:when>
+					
+					<c:when test="${not empty userId}">
+						<div class="d-none">
+							<div class="d-flex logInOut">
+								<div class="login" id="userName" data-userId="${userId}">${userName}님 환영합니다.</div>
+								<a class="login ml-3" href="/user/signout" id="logoutBtn">로그아웃</a>
+							</div>
+						</div>
+					</c:when>
+				</c:choose>
 			</div>
 		</header>

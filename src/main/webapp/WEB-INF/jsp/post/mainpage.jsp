@@ -82,15 +82,7 @@
 	
 	<script>
 		$(document).ready(function(){
-			var loginCheck = ${userId};
 			
-			if(loginCheck == null) {
-				$("#logoutClass").addClass("d-none");
-				$("#loginClass").removeClass("d-none");
-			} else {
-				$("#loginClass").addClass("d-none");
-				$("#logoutClass").removeClass("d-none");
-			}
 			
 		});
 	</script>

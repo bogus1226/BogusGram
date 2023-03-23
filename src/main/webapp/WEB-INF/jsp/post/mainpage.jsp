@@ -14,7 +14,9 @@
 <title>메인화면</title>
 </head>
 <body>
+	
 	<div id="wrap">
+		
 		<c:import url="/WEB-INF/jsp/post/include/header.jsp"/>
 		
 		<section class="main-contents d-flex">
@@ -40,7 +42,7 @@
 				
 					<div class="postInfoBox mt-4">
 						<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
-							<div class="nickname ml-2"><b>bogus</b></div>
+							<div class="nickname ml-2"><b>${user}</b></div>
 							<button type="button" class="btn hideBtn" data-hidebtn-check="0"><img height="23" alt="4개의선이있는 아이콘" src="/static/image/four_line.png"></button>
 						</div>
 						<div class="d-none hideBtns">

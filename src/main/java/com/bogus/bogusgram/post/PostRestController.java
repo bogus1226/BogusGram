@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.post.bo.PostBO;
+import com.bogus.bogusgram.post.model.Post;
 
 @RestController
 @RequestMapping("/post")
@@ -34,7 +35,7 @@ public class PostRestController {
 		int count = postBO.postCreate(userId, content, file);
 		
 		if(count != 0) {
-			resultMap.put("result", "success"); 		
+			resultMap.put("result", "success"); 	
 		} else {
 			resultMap.put("result", "fail");
 		}

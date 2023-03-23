@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.post.model.Post;
+import com.bogus.bogusgram.user.model.User;
 
 @Repository
 public interface PostDAO {
@@ -17,4 +17,9 @@ public interface PostDAO {
 			, @Param("imagePath") String imagePath);
 	
 	public List<Post> selectPost(); 
+	
+	public User	selectUser(@Param("userId") int userId);
+	
+//	public List<User> selectUser2();
+	
 }

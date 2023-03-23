@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bogus.bogusgram.post.dao.PostDAO">
+
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO
+			`post`
+		(
+			`userId`
+			, `content`
+			, `imagePath`
+			, `hide_info`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUE
+		(
+			#{userId}
+			, #{content}
+			, #{imagePath}
+			, 0
+			, now()
+			, now()
+		)
+	</insert>
+	
+	<select id="selectPost" resultType="com.bogus.bogusgram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imagePath`
+			, `hide_info`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`hide_info` = 0
+		ORDER BY
+			`id`
+		DESC
+	</select>
+</mapper>

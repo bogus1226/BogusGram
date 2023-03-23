@@ -23,7 +23,7 @@ public class UserContoller {
 		return "user/signin";
 	}
 	
-	@GetMapping("signout")
+	@GetMapping("/signout")
 	public String signout(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();

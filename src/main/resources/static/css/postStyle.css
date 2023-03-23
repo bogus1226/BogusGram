@@ -77,6 +77,10 @@ textarea::placeholder {
 	font-size:small;
 }
 
+.postInfoBox {
+	background-color:#fffeed;
+}
+
 .postInfoBoxHeader {
 	height:40px;
 	background-color:rgb(250, 237, 188);
@@ -92,7 +96,7 @@ textarea::placeholder {
 }
 
 .postImageBox > .postImage {
-	width:470px;
+	width:550px;
 	height:300px;
 	margin:auto;
 }
@@ -147,3 +151,5 @@ hr {
 	background-color:rgb(243, 115, 102);
 	color:white;
 }
+
+

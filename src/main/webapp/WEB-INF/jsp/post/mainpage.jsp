@@ -26,23 +26,28 @@
 				<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
 			</nav>
 			<section class="contents">
+			
+				<!-- 입력 박스 -->
 				<div class="postInputBox border border-warning">
 					<textarea rows="3" placeholder="내용을 입력해주세요" class="form-control" id="contentInput"></textarea>
 					<div class="d-flex justify-content-between">	
-						<div class="d-flex align-items-center">
-							<input id="fileInput" type="file" class="ml-2 mt-1">
+						<div class="file-upload d-flex align-items-center">
+							<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
+							<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
 						</div>
 						<div class="d-flex align-items-center">
-							<button type="button" class="uploadBtn btn btn-sm mr-2" id="uploadBtn">upload</button>
+							<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn">upload</button>
 						</div>
 					</div>
 				</div>
+				<!-- 입력 박스 -->
 				
+				<!-- 게시물 리스트 -->
 				<c:forEach var="post" items="${postList}">
-				
+					
 					<div class="postInfoBox mt-4">
 						<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
-							<div class="nickname ml-2"><b>${user}</b></div>
+							<div class="nickname ml-2"><b>${post.nick_name}</b></div>
 							<button type="button" class="btn hideBtn" data-hidebtn-check="0"><img height="23" alt="4개의선이있는 아이콘" src="/static/image/four_line.png"></button>
 						</div>
 						<div class="d-none hideBtns">
@@ -60,10 +65,14 @@
 										<div class="postImage mb-1">
 											<img alt="직접올린 사진" src="${post.imagePath}">
 										</div>
+										
+										<!-- 좋아요 버튼 -->
 										<div class="d-flex justify-content-end align-items-center">
-											<i class="bi bi-heart mt-1 mr-2"></i>
+											<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
 											<div class="mt-1 small"><b>11개</b></div>
 										</div>
+										<!-- 좋아요 버튼 -->
+										
 										<div class="postInfoContent">${post.content}</div>
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
@@ -71,10 +80,12 @@
 												<button type="button" class="commentSellectBtn btn btn-sm"><img height="20" alt="위쪽화살표 아이콘" src="/static/image/up.png"></button>
 											</div>
 											<div class="commentInfo mt-2">
-												<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
-												<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+												<div class="ml-3">
+													<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
+													<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+												</div>
 												<div class="d-flex justify-content-center">
-													<div class="input-group col-10 mt-3">
+													<div class="input-group col-10 mt-2">
 														<input type="text" class="form-control" placeholder="내용을 입력해주세요">
 														<div class="input-group-append">
 															<button class="commentBtn btn" type="button">게시</button>
@@ -89,10 +100,13 @@
 								<c:otherwise>
 									<div class="postImageBox">
 										<div class="postInfoContent mt-2">${post.content}</div>
+										
+										<!-- 좋아요 버튼 -->
 										<div class="d-flex justify-content-end align-items-center">
 											<i class="bi bi-heart mt-1 mr-2"></i>
 											<div class="mt-1 small"><b>11개</b></div>
 										</div>
+										<!-- 좋아요 버튼 -->
 										
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
@@ -100,10 +114,12 @@
 												<button type="button" class="commentSellectBtn btn btn-sm"><img height="20" alt="위쪽화살표 아이콘" src="/static/image/up.png"></button>
 											</div>
 											<div class="commentInfo mt-2">
-												<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
-												<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+												<div class="ml-3">
+													<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
+													<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+												</div>
 												<div class="d-flex justify-content-center">
-													<div class="input-group col-10 mt-3">
+													<div class="input-group col-10 mt-2">
 														<input type="text" class="form-control" placeholder="내용을 입력해주세요">
 														<div class="input-group-append">
 															<button class="commentBtn btn" type="button">게시</button>
@@ -118,6 +134,8 @@
 						</div>
 					</div>
 				</c:forEach>
+				<!-- 게시물 리스트 -->
+				
 			</section>	
 		</section>
 		
@@ -127,55 +145,89 @@
 	<script>
 		$(document).ready(function(){
 			
+			$(".likeIcon").on("click", function(){
+				let postId = $(this).data("postid");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/like"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("좋아요 실패");
+						}	
+					}
+					, error:function(){
+						alert("좋아요 에러");
+					}
+					
+				});
+			});
+			
+			
+			$("#imageIcon").on("click", function(){
+				// file input 을 클릭한 동작을 수행한다.
+				$("#fileInput").click();
+			});		
 		
-		$(".hideBtn").on("click", function(){
-			let hideBtnCheck = $(this).data("hidebtn-check");
 			
-			if(hideBtnCheck == 0) {
-				$(".hideBtns").removeClass("d-none");	
-				$(this).data("hidebtn-check", "1");
-			} else {
-				$(".hideBtns").addClass("d-none");	
-				$(this).data("hidebtn-check", "0");
-			}
-		});
-
-		$(".uploadBtn").on("click", function(){
-			let content = $("#contentInput").val();
-			let file = $("#fileInput")[0];
-			
-			if(content.trim() == "") {
-				alert("내용을 입력해주세요");
-				return;
-			}
-			
-			var formData = new FormData();
-			formData.append("content",content);
-			formData.append("file", file.files[0]);
-			
-			$.ajax({
-				type:"post"
-				, url:"/post/create"
-				, data:formData
-				, enctype:"multipart/form-data" // 파일 업로드 필수
-				, processData:false // 파일 업로드 필수
-				, contentType:false // 파일 업로드 필수
-				, success:function(data){
-					if(data.result == "success") {
-						location.reload();
-					} else {
-						alert("게시물 올리기 실패");
-					}	
+		
+			$(".hideBtn").on("click", function(){
+				let hideBtnCheck = $(this).data("hidebtn-check");
+				
+				if(hideBtnCheck == 0) {
+					$(".hideBtns").removeClass("d-none");	
+					$(this).data("hidebtn-check", "1");
+				} else {
+					$(".hideBtns").addClass("d-none");	
+					$(this).data("hidebtn-check", "0");
 				}
-				, error:function(){
-					alert("게시물 올리기 에러");
+			});
+	
+			$("#uploadBtn").on("click", function(){
+				let content = $("#contentInput").val();
+				let file = $("#fileInput")[0];
+				
+				if(content.trim() == "") {
+					alert("내용을 입력해주세요");
+					return;
 				}
 				
+				// 파일이 선택되지 않았을 경우의 유효성 검사
+				//if(file.files.length == 0) {
+				//	alert("파일을 선택하세요");
+				//	return;
+				//}
+				
+				var formData = new FormData();
+				formData.append("content",content);
+				formData.append("file", file.files[0]);
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/create"
+					, data:formData
+					, enctype:"multipart/form-data" // 파일 업로드 필수
+					, processData:false // 파일 업로드 필수
+					, contentType:false // 파일 업로드 필수
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("게시물 올리기 실패");
+						}	
+					}
+					, error:function(){
+						alert("게시물 올리기 에러");
+					}
+					
+				});
 			});
-		});
-			
-			
-		});
+				
+				
+			});
 	</script>
 	
 </body>

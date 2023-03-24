@@ -61,7 +61,7 @@ header > .logInOut {
 	height:110px;
 }
 
-.uploadBtn {
+#uploadBtn {
 	background-color:rgb(243, 115, 102);
 	color:white;
 }
@@ -152,4 +152,6 @@ hr {
 	color:white;
 }
 
-
+.file-upload > .image-icon-size {
+	font-size:30px;
+}

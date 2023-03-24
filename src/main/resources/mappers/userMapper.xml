@@ -52,5 +52,21 @@
 		AND
 			`password` = #{password}
 	</select>
+	
+	<select id="selectUserById" parameterType="int" resultType="com.bogus.bogusgram.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `name`
+			, `nick_name`
+			, `password`
+			, `profile_img`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`id` = #{id}
+	</select>
 
 </mapper>

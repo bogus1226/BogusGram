@@ -38,4 +38,8 @@ public class UserBO {
 		return userDAO.selcetCountLoginCheck(loginId, encryptPassword);
 		
 	}
+	
+	public User getUserById(int userId) {
+		return userDAO.selectUserById(userId);
+	}
 }

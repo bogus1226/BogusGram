@@ -44,6 +44,33 @@
 		DESC
 	</select>
 	
+	<insert id="insertLike"  parameterType="int">
+		INSERT INTO
+			`like`
+		(
+			`postId`
+			, `userId`
+			, `createdAt`
+		)
+		VALUE
+		(
+			#{postId}
+			, #{userId}
+			, now()
+		)
+	</insert>
+	
+	<select id="selectLike" parameterType="int">
+		SELECT
+			count(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+	</select>
+	
+	
+<!-- 닉네임 가져오기 실패작품들
 	<select id="selectUser" resultType="com.bogus.bogusgram.user.model.User" parameterType="int">
 		SELECT
 			`id`
@@ -53,13 +80,12 @@
 		WHERE
 			`id` = #{userId}
   	</select>
-<!--	
+	
 	<select id="selectUser2" resultType="com.bogus.bogusgram.user.model.User" parameterType="int">
 		SELECT
 			`id`
 			,`nick_name`
 		FROM
 			`user`
-	</select>
--->	
+	</select> -->	
 </mapper>

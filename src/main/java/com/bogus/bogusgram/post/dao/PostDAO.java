@@ -18,8 +18,12 @@ public interface PostDAO {
 	
 	public List<Post> selectPost(); 
 	
-	public User	selectUser(@Param("userId") int userId);
+	public int insertLike(@Param("postId") int postId, @Param("userId") int userId);
 	
+	public int selectLike(@Param("postId") int postId);
+	
+// 	닉네임 가져오기 실패작품들
+//	public User	selectUser(@Param("userId") int userId);	
 //	public List<User> selectUser2();
 	
 }

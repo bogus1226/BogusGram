@@ -19,4 +19,6 @@ public interface UserDAO {
 	public User selcetCountLoginCheck(
 			@Param("loginId") String loginId
 			, @Param("password") String password);
+	
+	public User selectUserById(@Param("id") int id);
 }

@@ -48,9 +48,9 @@
 					<div class="postInfoBox mt-4">
 						<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
 							<div class="nickname ml-2"><b>${post.nick_name}</b></div>
-							<button type="button" class="btn hideBtn" data-hidebtn-check="0"><img height="23" alt="4개의선이있는 아이콘" src="/static/image/four_line.png"></button>
-						</div>
-						<div class="d-none hideBtns">
+							<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
+						</div> 
+						<div class="d-none hideBtns${post.id}">
 							<div class="postBtns d-flex justify-content-end">
 								<button type="button" class="btn btn-sm mr-2">숨기기</button>
 								<button type="button" class="btn btn-sm mr-2">수정하기</button>
@@ -68,8 +68,16 @@
 										
 										<!-- 좋아요 버튼 -->
 										<div class="d-flex justify-content-end align-items-center">
-											<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
-											<div class="mt-1 small"><b>11개</b></div>
+											<c:choose>
+												<c:when test="${post.likeCheck eq 0}">
+													<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="likeIcon bi bi-heart-fill mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
+												</c:otherwise>
+											</c:choose>
+											
+											<div class="mt-1 small"><b>${post.like}개</b></div>
 										</div>
 										<!-- 좋아요 버튼 -->
 										
@@ -77,7 +85,7 @@
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
 												<div class="ml-2"><b>comment</b></div>
-												<button type="button" class="commentSellectBtn btn btn-sm"><img height="20" alt="위쪽화살표 아이콘" src="/static/image/up.png"></button>
+												<i class="bi bi-caret-up-fill btn"></i>
 											</div>
 											<div class="commentInfo mt-2">
 												<div class="ml-3">
@@ -103,15 +111,22 @@
 										
 										<!-- 좋아요 버튼 -->
 										<div class="d-flex justify-content-end align-items-center">
-											<i class="bi bi-heart mt-1 mr-2"></i>
-											<div class="mt-1 small"><b>11개</b></div>
+											<c:choose>
+												<c:when test="${post.likeCheck eq 0}">
+													<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="likeIcon bi bi-heart-fill mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
+												</c:otherwise>
+											</c:choose>
+											<div class="mt-1 small"><b>${post.like}개</b></div>
 										</div>
 										<!-- 좋아요 버튼 -->
 										
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
 												<div class="ml-2"><b>comment</b></div>
-												<button type="button" class="commentSellectBtn btn btn-sm"><img height="20" alt="위쪽화살표 아이콘" src="/static/image/up.png"></button>
+												<i class="bi bi-caret-up-fill btn"></i>
 											</div>
 											<div class="commentInfo mt-2">
 												<div class="ml-3">
@@ -144,26 +159,58 @@
 	
 	<script>
 		$(document).ready(function(){
-			
+				
 			$(".likeIcon").on("click", function(){
 				let postId = $(this).data("postid");
 				
 				$.ajax({
 					type:"get"
-					, url:"/post/like"
+					, url:"/post/like/isDuplicate"
 					, data:{"postId":postId}
 					, success:function(data){
-						if(data.result == "success") {
-							location.reload();
+						if(data.is_duplicate) {
+							$.ajax({
+								type:"get"
+								, url:"/post/unlike"
+								, data:{"postId":postId}
+								, success:function(data){
+									if(data.result == "success") {
+										location.reload();
+									} else {
+										alert("좋아요 취소 실패");
+									}	
+								}
+								, error:function(){
+									alert("좋아요 취소 에러");
+								}
+								
+							});
 						} else {
-							alert("좋아요 실패");
+							$.ajax({
+								type:"get"
+								, url:"/post/like"
+								, data:{"postId":postId}
+								, success:function(data){
+									if(data.result == "success") {
+										location.reload();
+									} else {
+										alert("좋아요 실패");
+									}	
+								}
+								, error:function(){
+									alert("좋아요 에러");
+								}
+								
+							});
 						}	
 					}
 					, error:function(){
-						alert("좋아요 에러");
+						alert("좋아요 중복확인 에러");
 					}
 					
 				});
+						
+				
 			});
 			
 			
@@ -176,12 +223,14 @@
 		
 			$(".hideBtn").on("click", function(){
 				let hideBtnCheck = $(this).data("hidebtn-check");
+				let id = $(this).data("hide-postid");
+				let btns = ".hideBtns" + id;
 				
 				if(hideBtnCheck == 0) {
-					$(".hideBtns").removeClass("d-none");	
+					$(btns).removeClass("d-none");	
 					$(this).data("hidebtn-check", "1");
 				} else {
-					$(".hideBtns").addClass("d-none");	
+					$(btns).addClass("d-none");	
 					$(this).data("hidebtn-check", "0");
 				}
 			});

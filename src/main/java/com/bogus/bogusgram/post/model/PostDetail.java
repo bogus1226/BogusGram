@@ -7,7 +7,23 @@ public class PostDetail {
 	private String nick_name;
 	private String content;
 	private String imagePath;
+	private int like;
+	private int likeCheck;
 	
+	
+	
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
 	public int getId() {
 		return id;
 	}

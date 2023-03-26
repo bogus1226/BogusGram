@@ -30,7 +30,7 @@ public class PostBO {
 		return postDAO.insertPost(userId, content, imagePath);
 	}
 	
-	public List<PostDetail> getPost() {
+	public List<PostDetail> getPost(int userId) {
 		
 		// 컨트롤러에서 원하는 (jsp에서 사용할) 데이터 형태를 만들어 준다.
 		List<Post> postList = postDAO.selectPost();
@@ -43,6 +43,8 @@ public class PostBO {
 			
 			PostDetail postDetail = new PostDetail();
 			
+			postDetail.setLikeCheck(postDAO.selectIsDuplicateLike(post.getId(), userId));
+			postDetail.setLike(postDAO.selectLike(post.getId()));
 			postDetail.setId(post.getId());
 			postDetail.setContent(post.getContent());
 			postDetail.setImagePath(post.getImagePath());
@@ -60,6 +62,17 @@ public class PostBO {
 		return postDAO.insertLike(postId, userId);
 	}
 	
+	public Boolean isDuplicateLike(int postId,int userId) {
+		
+		int count = postDAO.selectIsDuplicateLike(postId, userId);
+		
+		return count != 0;
+	}
+	
+	public int unlike(int postId,int userId) {
+		
+		return postDAO.deleteUnlike(postId, userId);
+	}
 	
 //  닉네임 가져오기 실패 작품들...	
 //	public User getUser() {

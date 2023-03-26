@@ -60,5 +60,33 @@ public class PostRestController {
 		return resultMap;
 	}
 	
+	@GetMapping("/like/isDuplicate")
+	public Map<String, Object> isDuplicateLike(@RequestParam("postId") int postId, HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		resultMap.put("is_duplicate", postBO.isDuplicateLike(postId, userId));
+		
+		return resultMap;
+	}
+	
+	@GetMapping("/unlike")
+	public Map<String, String> unlike(@RequestParam("postId") int postId, HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		int count = postBO.unlike(postId, userId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(count != 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
 	
 }

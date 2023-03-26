@@ -60,7 +60,7 @@
 		)
 	</insert>
 	
-	<select id="selectLike" parameterType="int">
+	<select id="selectLike" parameterType="int" resultType="int">
 		SELECT
 			count(1)
 		FROM
@@ -68,6 +68,26 @@
 		WHERE
 			`postId` = #{postId}
 	</select>
+	
+	<select id="selectIsDuplicateLike" parameterType="int" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+		AND 
+		 	`userId` = #{userId}
+	</select>
+	
+	<delete id="deleteUnlike" parameterType="int">
+		DELETE FROM 
+			`like` 
+		WHERE 
+			`postId` = #{postId} 
+		AND 
+			`userId` = #{userId}
+	</delete>
 	
 	
 <!-- 닉네임 가져오기 실패작품들

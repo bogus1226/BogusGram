@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bogus.bogusgram.post.bo.PostBO;
-import com.bogus.bogusgram.post.model.Post;
 import com.bogus.bogusgram.post.model.PostDetail;
 
 @Controller
@@ -22,9 +23,11 @@ public class PostController {
 	private PostBO postBO;
 	
 	@GetMapping("/mainpage/view")
-	public String mainPage(Model model) {
+	public String mainPage(Model model, HttpSession session) {
 		
-		List<PostDetail> postList = postBO.getPost();
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		List<PostDetail> postList = postBO.getPost(userId);
 		
 		model.addAttribute("postList", postList);
 		

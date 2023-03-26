@@ -22,6 +22,10 @@ public interface PostDAO {
 	
 	public int selectLike(@Param("postId") int postId);
 	
+	public int selectIsDuplicateLike(@Param("postId") int postId, @Param("userId") int userId);
+	
+	public int deleteUnlike(@Param("postId") int postId, @Param("userId") int userId);
+	
 // 	닉네임 가져오기 실패작품들
 //	public User	selectUser(@Param("userId") int userId);	
 //	public List<User> selectUser2();

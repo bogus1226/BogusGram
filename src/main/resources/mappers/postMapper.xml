@@ -89,6 +89,83 @@
 			`userId` = #{userId}
 	</delete>
 	
+	<update id="updatePostHide" parameterType="int">
+		UPDATE
+			`post`
+		SET
+			`hide_info` = 1
+			, `updatedAt` = now()
+		WHERE
+			`id` = #{postId};
+	</update>
+	
+	<delete id="deletePost" parameterType="int">
+		DELETE FROM 
+			`post` 
+		WHERE 
+			`id` = #{postId} 
+	</delete>
+	
+	<select id="selectPostInfo" parameterType="int" resultType="com.bogus.bogusgram.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `content`
+			, `imagePath`
+			, `hide_info`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE 
+			`id` = #{postId}
+	</select>
+	
+	<update id="updatePost" parameterType="map">
+		UPDATE
+			`post`
+		SET
+			`content` = #{content}
+			, `imagePath` = #{file}
+			, `updatedAt` = now()
+		WHERE
+			`id` = #{postId};
+	</update>
+	
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO
+			`comment`
+		(
+			`postId`
+			, `userId`
+			, `comment`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUE
+		(
+			#{postId}
+			, #{userId}
+			, #{comment}
+			, now()
+			, now()
+		)
+	</insert>
+	
+	<select id="selectComment" parameterType="map" resultType="com.bogus.bogusgram.post.model.PostDetail">
+		SELECT
+			`id`
+			, `postId`
+			, `userId`
+			, `comment`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`
+		WHERE 
+			`id` = #{postId}
+	</select>
+	
 	
 <!-- 닉네임 가져오기 실패작품들
 	<select id="selectUser" resultType="com.bogus.bogusgram.user.model.User" parameterType="int">

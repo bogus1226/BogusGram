@@ -9,9 +9,16 @@ public class PostDetail {
 	private String imagePath;
 	private int like;
 	private int likeCheck;
+	private String comment;
 	
 	
 	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	public int getLikeCheck() {
 		return likeCheck;
 	}

@@ -57,6 +57,11 @@ header > .logInOut {
 	width:550px;
 }
 
+.contents > .btn {
+	background-color:rgb(243, 115, 102);
+	color:white;
+}
+
 .contents > .postInputBox {
 	height:110px;
 }

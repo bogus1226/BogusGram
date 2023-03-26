@@ -11,7 +11,6 @@ import com.bogus.bogusgram.common.FileManagerService;
 import com.bogus.bogusgram.post.dao.PostDAO;
 import com.bogus.bogusgram.post.model.Post;
 import com.bogus.bogusgram.post.model.PostDetail;
-import com.bogus.bogusgram.post.model.PostLike;
 import com.bogus.bogusgram.user.bo.UserBO;
 import com.bogus.bogusgram.user.model.User;
 
@@ -57,6 +56,29 @@ public class PostBO {
 		return postDetailList;
 	}
 	
+//  게시물의 댓글 화면에 보이기 진행중
+//	public List<PostComment> getComment() {
+//		
+//		List<Post> postList = postDAO.selectPost();
+//		
+//		List<PostComment> postCommentList = new ArrayList<>();
+//		
+//		for(Post post:postList) {
+//			
+//			User user = userBO.getUserById(post.getUserId());
+//			
+//			postCommentList.addAll( postDAO.selectComment(post.getId()));
+//			
+//			PostComment postComment = new PostComment();
+//			
+//			postComment.setNick_name(user.getNick_name());
+//			
+//			
+//		}
+//		
+//		return postCommentList;
+//	}
+	
 	public int getLike(int postId,int userId) {
 		
 		return postDAO.insertLike(postId, userId);
@@ -73,6 +95,33 @@ public class PostBO {
 		
 		return postDAO.deleteUnlike(postId, userId);
 	}
+	
+	public int postHide(int postId) {
+		
+		return postDAO.updatePostHide(postId);
+	}
+	
+	public int postDelte(int postId) {
+		
+		return postDAO.deletePost(postId);
+	}
+	
+	public Post getPostInfo(int postId) {
+		
+		return postDAO.selectPostInfo(postId);
+	}
+	
+	public int postUpdate(int userId, int postId, String content, MultipartFile file) {
+		String imagePath = FileManagerService.saveFile(userId, file);
+		
+		return postDAO.updatePost(postId, content, imagePath);
+	}
+	
+	public int commentAdd(int userId, int postId, String Commnet) {
+		return postDAO.insertComment(userId, postId, Commnet);
+	}
+	
+
 	
 //  닉네임 가져오기 실패 작품들...	
 //	public User getUser() {

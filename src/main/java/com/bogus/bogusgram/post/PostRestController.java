@@ -89,4 +89,75 @@ public class PostRestController {
 		return resultMap;
 	}
 	
+	@GetMapping("/hide")
+	public Map<String, String> postHide(@RequestParam("postId") int postId) {
+		
+		int count = postBO.postHide(postId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(count != 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	@GetMapping("/delete")
+	public Map<String, String> postDelete(@RequestParam("postId") int postId) {
+		
+		int count = postBO.postDelte(postId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(count != 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/update")
+	public Map<String, String> postUpdate(
+			@RequestParam("postId") int postId
+			, @RequestParam("content") String content
+			, @RequestParam(value="file", required=false) MultipartFile file
+			, HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		int count = postBO.postUpdate(userId, postId, content, file);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(count != 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/comment/add") 
+	public Map<String, String> commentAdd(
+			@RequestParam("postId") int postId
+			, @RequestParam("comment") String comment
+			, HttpSession session) {
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		int count = postBO.commentAdd(userId, postId, comment);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(count != 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	
 }

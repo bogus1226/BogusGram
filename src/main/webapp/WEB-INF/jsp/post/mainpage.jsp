@@ -48,13 +48,15 @@
 					<div class="postInfoBox mt-4">
 						<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
 							<div class="nickname ml-2"><b>${post.nick_name}</b></div>
-							<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
+							<c:if test="${post.userId eq userId}">
+								<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
+							</c:if>
 						</div> 
 						<div class="d-none hideBtns${post.id}">
 							<div class="postBtns d-flex justify-content-end">
-								<button type="button" class="btn btn-sm mr-2">숨기기</button>
-								<button type="button" class="btn btn-sm mr-2">수정하기</button>
-								<button type="button" class="btn btn-sm">삭제하기</button>
+								<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
+								<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
+								<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
 							</div>
 						</div>
 						
@@ -82,6 +84,8 @@
 										<!-- 좋아요 버튼 -->
 										
 										<div class="postInfoContent">${post.content}</div>
+										
+										<!-- 댓글달기 -->
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
 												<div class="ml-2"><b>comment</b></div>
@@ -89,19 +93,19 @@
 											</div>
 											<div class="commentInfo mt-2">
 												<div class="ml-3">
-													<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
-													<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+													<div class="small mt-1"><b>보거스</b>ㅋㅋㅋ</div>
 												</div>
 												<div class="d-flex justify-content-center">
 													<div class="input-group col-10 mt-2">
-														<input type="text" class="form-control" placeholder="내용을 입력해주세요">
+														<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
 														<div class="input-group-append">
-															<button class="commentBtn btn" type="button">게시</button>
+															<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
+										<!-- 댓글달기 -->
 									</div>
 								</c:when>
 								
@@ -123,6 +127,7 @@
 										</div>
 										<!-- 좋아요 버튼 -->
 										
+										<!-- 댓글달기 -->
 										<div class="comment">
 											<div class="comment-header d-flex align-items-center justify-content-between">
 												<div class="ml-2"><b>comment</b></div>
@@ -130,19 +135,19 @@
 											</div>
 											<div class="commentInfo mt-2">
 												<div class="ml-3">
-													<div class="small mt-1"><b>bogus</b> 내가 놀아줄게 나와라</div>
-													<div class="small mt-1"><b>groot</b> 아이 엠 그루트</div>
+													<div class="small mt-1"><b>보거스</b>ㅋㅋㅋ</div>
 												</div>
 												<div class="d-flex justify-content-center">
 													<div class="input-group col-10 mt-2">
-														<input type="text" class="form-control" placeholder="내용을 입력해주세요">
+														<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
 														<div class="input-group-append">
-															<button class="commentBtn btn" type="button">게시</button>
+															<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
+										<!-- 댓글달기 -->
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -159,6 +164,71 @@
 	
 	<script>
 		$(document).ready(function(){
+			
+			$(".commentBtn").on("click", function(){
+				let postId = $(this).data("comment-id");
+				let commentId = "#comment" + postId;
+				let comment = $(commentId).val();
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/comment/add"
+					, data:{"postId":postId, "comment":comment}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("댓글 달기 실패");
+						}	
+					}
+					, error:function(){
+						alert("댓글 달기 에러");
+					}
+					
+				});
+			});
+			
+			$(".deleteBtn").on("click", function(){
+				let postId = $(this).data("delete-id");
+
+				$.ajax({
+					type:"get"
+					, url:"/post/delete"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("삭제 실패");
+						}	
+					}
+					, error:function(){
+						alert("삭제 에러");
+					}
+					
+				});
+			});
+			
+			$(".hideButton").on("click", function(){
+				let postId = $(this).data("this-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/hide"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("숨기기 실패");
+						}	
+					}
+					, error:function(){
+						alert("숨기기 에러");
+					}
+					
+				});
+			});
 				
 			$(".likeIcon").on("click", function(){
 				let postId = $(this).data("postid");

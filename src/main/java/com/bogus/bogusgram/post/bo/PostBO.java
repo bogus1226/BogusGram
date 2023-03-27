@@ -55,6 +55,11 @@ public class PostBO {
 			boolean isLike = likeBO.isDuplicateLike(userId, post.getId());
 			List<Comment> commentList = commentBO.getCommentList(post.getId());
 			
+			for(Comment comment:commentList) {
+				User userNickName = userBO.getUserById(comment.getUserId()); 
+				comment.setNick_name(userNickName);
+			}
+			
 			postDetail.setId(post.getId());
 			postDetail.setContent(post.getContent());
 			postDetail.setImagePath(post.getImagePath());
@@ -91,11 +96,6 @@ public class PostBO {
 		
 		return postDAO.updatePost(postId, content, imagePath);
 	}
-	
-
-	
-
-	
 	
 	
 }

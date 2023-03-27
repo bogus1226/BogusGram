@@ -14,8 +14,7 @@ public class PostDetail {
 	private int likeCount;
 	private boolean isLike;
 	private List<Comment> commentList;
-	
-	
+
 	public List<Comment> getCommentList() {
 		return commentList;
 	}

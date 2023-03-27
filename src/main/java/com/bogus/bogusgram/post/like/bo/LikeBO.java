@@ -32,4 +32,9 @@ public class LikeBO {
 		
 		return count != 0;
 	}
+	
+	public int deletePostAllLike(int postId) {
+		
+		return likeDAO.deletePostAllLike(postId);
+	}
 }

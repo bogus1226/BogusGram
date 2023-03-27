@@ -20,4 +20,6 @@ public interface LikeDAO {
 	public int selectCountIsDuplicateLike(
 			@Param("userId") int userId
 			, @Param("postId") int postId);
+	
+	public int deletePostAllLike(@Param("postId") int postId);
 }

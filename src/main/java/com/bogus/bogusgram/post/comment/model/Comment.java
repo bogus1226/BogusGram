@@ -1,6 +1,9 @@
 package com.bogus.bogusgram.post.comment.model;
 
 import java.util.Date;
+import java.util.List;
+
+import com.bogus.bogusgram.user.model.User;
 
 public class Comment {
 
@@ -10,13 +13,14 @@ public class Comment {
 	private String comment;
 	private Date createdAt;
 	private Date updatedAt;
-	private String nick_name;
+	private User nick_name;
 	
 	
-	public String getNick_name() {
+
+	public User getNick_name() {
 		return nick_name;
 	}
-	public void setNick_name(String nick_name) {
+	public void setNick_name(User nick_name) {
 		this.nick_name = nick_name;
 	}
 	public int getId() {

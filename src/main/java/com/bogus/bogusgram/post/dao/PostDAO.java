@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bogus.bogusgram.post.model.Post;
-import com.bogus.bogusgram.post.model.PostDetail;
 
 @Repository
 public interface PostDAO {

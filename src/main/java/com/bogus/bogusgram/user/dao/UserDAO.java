@@ -1,7 +1,5 @@
 package com.bogus.bogusgram.user.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +21,5 @@ public interface UserDAO {
 			, @Param("password") String password);
 	
 	public User selectUserById(@Param("id") int id);
-
+	
 }

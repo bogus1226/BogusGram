@@ -92,7 +92,7 @@
 									<div class="commentInfo mt-2">
 										<div class="ml-3">
 											<c:forEach var="comment" items="${post.commentList}">
-												<div class="small mt-1"><b>보거스</b> ${comment.comment}</div>
+												<div class="small mt-1"><b>${comment.nick_name.nick_name}</b> ${comment.comment}</div>
 											</c:forEach>
 										</div>
 										<div class="d-flex justify-content-center">

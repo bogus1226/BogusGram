@@ -61,96 +61,52 @@
 						</div>
 						
 						<div class="postInfo">
-							<c:choose>
-								<c:when test="${not empty post.imagePath}">
-									<div class="postImageBox">
-										<div class="postImage mb-1">
-											<img alt="직접올린 사진" src="${post.imagePath}">
-										</div>
-										
-										<!-- 좋아요 버튼 -->
-										<div class="d-flex justify-content-end align-items-center">
-											<c:choose>
-												<c:when test="${post.likeCheck eq 0}">
-													<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
-												</c:when>
-												<c:otherwise>
-													<i class="likeIcon bi bi-heart-fill mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
-												</c:otherwise>
-											</c:choose>
-											
-											<div class="mt-1 small"><b>${post.like}개</b></div>
-										</div>
-										<!-- 좋아요 버튼 -->
-										
-										<div class="postInfoContent">${post.content}</div>
-										
-										<!-- 댓글달기 -->
-										<div class="comment">
-											<div class="comment-header d-flex align-items-center justify-content-between">
-												<div class="ml-2"><b>comment</b></div>
-												<i class="bi bi-caret-up-fill btn"></i>
-											</div>
-											<div class="commentInfo mt-2">
-												<div class="ml-3">
-													<div class="small mt-1"><b>보거스</b>ㅋㅋㅋ</div>
-												</div>
-												<div class="d-flex justify-content-center">
-													<div class="input-group col-10 mt-2">
-														<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
-														<div class="input-group-append">
-															<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- 댓글달기 -->
+							<div class="postImageBox">
+								<c:if test="${not empty post.imagePath}">
+									<div class="postImage mb-1">
+										<img alt="직접올린 사진" src="${post.imagePath}">
 									</div>
-								</c:when>
+								</c:if>
+								<!-- 좋아요 버튼 -->
+								<div class="d-flex justify-content-end align-items-center">
+									<c:choose>
+										<c:when test="${!post.like}">
+											<i class="like-icon bi bi-heart mt-1 mr-2" data-post-id="${post.id}"></i>
+										</c:when>
+										<c:otherwise>
+											<i class="like-icon bi bi-heart-fill text-danger mt-1 mr-2" data-post-id="${post.id}"></i>
+										</c:otherwise>
+									</c:choose>
+									<div class="mt-1 small"><b>좋아요 ${post.likeCount}개</b></div>
+								</div>
+								<!-- 좋아요 버튼 -->
 								
-								<c:otherwise>
-									<div class="postImageBox">
-										<div class="postInfoContent mt-2">${post.content}</div>
-										
-										<!-- 좋아요 버튼 -->
-										<div class="d-flex justify-content-end align-items-center">
-											<c:choose>
-												<c:when test="${post.likeCheck eq 0}">
-													<i class="likeIcon bi bi-heart mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
-												</c:when>
-												<c:otherwise>
-													<i class="likeIcon bi bi-heart-fill mt-1 mr-2" class="btn" data-postid="${post.id}"></i>
-												</c:otherwise>
-											</c:choose>
-											<div class="mt-1 small"><b>${post.like}개</b></div>
-										</div>
-										<!-- 좋아요 버튼 -->
-										
-										<!-- 댓글달기 -->
-										<div class="comment">
-											<div class="comment-header d-flex align-items-center justify-content-between">
-												<div class="ml-2"><b>comment</b></div>
-												<i class="bi bi-caret-up-fill btn"></i>
-											</div>
-											<div class="commentInfo mt-2">
-												<div class="ml-3">
-													<div class="small mt-1"><b>보거스</b>ㅋㅋㅋ</div>
-												</div>
-												<div class="d-flex justify-content-center">
-													<div class="input-group col-10 mt-2">
-														<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
-														<div class="input-group-append">
-															<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- 댓글달기 -->
+								<div class="postInfoContent">${post.content}</div>
+								
+								<!-- 댓글달기 -->
+								<div class="comment">
+									<div class="comment-header d-flex align-items-center justify-content-between">
+										<div class="ml-2"><b>comment</b></div>
+										<i class="bi bi-caret-up-fill btn"></i>
 									</div>
-								</c:otherwise>
-							</c:choose>
+									<div class="commentInfo mt-2">
+										<div class="ml-3">
+											<c:forEach var="comment" items="${post.commentList}">
+												<div class="small mt-1"><b>보거스</b> ${comment.comment}</div>
+											</c:forEach>
+										</div>
+										<div class="d-flex justify-content-center">
+											<div class="input-group col-10 mt-2">
+												<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
+												<div class="input-group-append">
+													<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 댓글달기 -->
+							</div>
 						</div>
 					</div>
 				</c:forEach>
@@ -164,6 +120,56 @@
 	
 	<script>
 		$(document).ready(function(){
+			
+			$(".like-icon").on("click", function(){
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/like/isDuplicate"
+					, data:{"postId":postId}
+				 	, success:function(data){
+				 		if(data.isDuplicate) {
+				 			$.ajax({
+								type:"get"
+								, url:"/post/unlike"
+								, data:{"postId":postId}
+							 	, success:function(data){
+							 		if(data.result == "success") {
+							 			location.reload();
+							 		} else {
+							 			alert("좋아요취소 실패");
+							 		}
+							 	}
+							 	, error:function(){
+							 		alert("좋아요취소 에러");
+							 	}
+							});
+				 		} else {
+				 			$.ajax({
+								type:"get"
+								, url:"/post/like"
+								, data:{"postId":postId}
+							 	, success:function(data){
+							 		if(data.result == "success") {
+							 			location.reload();
+							 		} else {
+							 			alert("좋아요 실패");
+							 		}
+							 	}
+							 	, error:function(){
+							 		alert("좋아요 에러");
+							 	}
+							});
+				 		}
+				 	}
+				 	, error:function(){
+				 		alert("좋아요 중복확인 에러");
+				 	}
+				});
+				
+				
+			});
 			
 			$(".commentBtn").on("click", function(){
 				let postId = $(this).data("comment-id");
@@ -230,7 +236,7 @@
 				});
 			});
 				
-			$(".likeIcon").on("click", function(){
+/*			$(".likeIcon").on("click", function(){
 				let postId = $(this).data("postid");
 				
 				$.ajax({
@@ -281,7 +287,7 @@
 				});
 						
 				
-			});
+			});  */
 			
 			
 			$("#imageIcon").on("click", function(){

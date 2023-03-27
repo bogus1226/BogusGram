@@ -43,52 +43,7 @@
 			`id`
 		DESC
 	</select>
-	
-	<insert id="insertLike"  parameterType="int">
-		INSERT INTO
-			`like`
-		(
-			`postId`
-			, `userId`
-			, `createdAt`
-		)
-		VALUE
-		(
-			#{postId}
-			, #{userId}
-			, now()
-		)
-	</insert>
-	
-	<select id="selectLike" parameterType="int" resultType="int">
-		SELECT
-			count(1)
-		FROM
-			`like`
-		WHERE
-			`postId` = #{postId}
-	</select>
-	
-	<select id="selectIsDuplicateLike" parameterType="int" resultType="int">
-		SELECT
-			count(1)
-		FROM
-			`like`
-		WHERE
-			`postId` = #{postId}
-		AND 
-		 	`userId` = #{userId}
-	</select>
-	
-	<delete id="deleteUnlike" parameterType="int">
-		DELETE FROM 
-			`like` 
-		WHERE 
-			`postId` = #{postId} 
-		AND 
-			`userId` = #{userId}
-	</delete>
-	
+
 	<update id="updatePostHide" parameterType="int">
 		UPDATE
 			`post`
@@ -132,57 +87,7 @@
 			`id` = #{postId};
 	</update>
 	
-	<insert id="insertComment" parameterType="map">
-		INSERT INTO
-			`comment`
-		(
-			`postId`
-			, `userId`
-			, `comment`
-			, `createdAt`
-			, `updatedAt`
-		)
-		VALUE
-		(
-			#{postId}
-			, #{userId}
-			, #{comment}
-			, now()
-			, now()
-		)
-	</insert>
-	
-	<select id="selectComment" parameterType="map" resultType="com.bogus.bogusgram.post.model.PostDetail">
-		SELECT
-			`id`
-			, `postId`
-			, `userId`
-			, `comment`
-			, `createdAt`
-			, `updatedAt`
-		FROM
-			`comment`
-		WHERE 
-			`id` = #{postId}
-	</select>
+
 	
 	
-<!-- 닉네임 가져오기 실패작품들
-	<select id="selectUser" resultType="com.bogus.bogusgram.user.model.User" parameterType="int">
-		SELECT
-			`id`
-			,`nick_name`
-		FROM
-			`user`
-		WHERE
-			`id` = #{userId}
-  	</select>
-	
-	<select id="selectUser2" resultType="com.bogus.bogusgram.user.model.User" parameterType="int">
-		SELECT
-			`id`
-			,`nick_name`
-		FROM
-			`user`
-	</select> -->	
 </mapper>

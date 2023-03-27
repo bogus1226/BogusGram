@@ -1,5 +1,7 @@
 package com.bogus.bogusgram.user.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,4 +44,5 @@ public class UserBO {
 	public User getUserById(int userId) {
 		return userDAO.selectUserById(userId);
 	}
+	
 }

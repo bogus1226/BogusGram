@@ -1,8 +1,8 @@
-package com.bogus.bogusgram.post.model;
+package com.bogus.bogusgram.post.comment.model;
 
 import java.util.Date;
 
-public class PostComment {
+public class Comment {
 
 	private int id;
 	private int postId;
@@ -55,7 +55,4 @@ public class PostComment {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
-	
 }

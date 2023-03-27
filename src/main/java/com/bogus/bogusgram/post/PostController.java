@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bogus.bogusgram.post.bo.PostBO;
 import com.bogus.bogusgram.post.model.Post;
-import com.bogus.bogusgram.post.model.PostComment;
 import com.bogus.bogusgram.post.model.PostDetail;
 
 @Controller
@@ -31,22 +30,6 @@ public class PostController {
 		List<PostDetail> postList = postBO.getPost(userId);
 		
 		model.addAttribute("postList", postList);
-		model.addAttribute("userId", userId);
-		
-// 		게시물에 닉네임 구현하기위해 생각헀던 실패 자료들
-//		List<User> userList = postBO.getUser2();
-//		
-//		Map<Object, Object> maps = new HashMap<>();
-//		maps.put(postList, userList);
-//		
-//		model.addAttribute("maps", maps);
-//
-//		model.addAttribute("user", postBO.getUser(1).getNick_name());
-//		
-//		List<Map<List<Post>, User>> list = new ArrayList<>();
-//		Map<List<Post>, User> map = new HashMap<>();
-//		map.put(postList, postBO.getUser(0));
-//		list.add(map);
 		
 		return "post/mainpage";
 	}

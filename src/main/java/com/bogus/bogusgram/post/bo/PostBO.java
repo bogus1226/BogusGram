@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.common.FileManagerService;
+import com.bogus.bogusgram.post.comment.bo.CommentBO;
+import com.bogus.bogusgram.post.comment.model.Comment;
 import com.bogus.bogusgram.post.dao.PostDAO;
+import com.bogus.bogusgram.post.like.bo.LikeBO;
+import com.bogus.bogusgram.post.like.dao.LikeDAO;
 import com.bogus.bogusgram.post.model.Post;
 import com.bogus.bogusgram.post.model.PostDetail;
 import com.bogus.bogusgram.user.bo.UserBO;
@@ -22,6 +26,12 @@ public class PostBO {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private LikeBO likeBO;
+	
+	@Autowired
+	private CommentBO commentBO;
 	
 	public int postCreate(int userId, String content, MultipartFile file) {
 		
@@ -41,14 +51,18 @@ public class PostBO {
 			User user = userBO.getUserById(post.getUserId());
 			
 			PostDetail postDetail = new PostDetail();
+			int likeCount = likeBO.getListCount(post.getId());
+			boolean isLike = likeBO.isDuplicateLike(userId, post.getId());
+			List<Comment> commentList = commentBO.getCommentList(post.getId());
 			
-			postDetail.setLikeCheck(postDAO.selectIsDuplicateLike(post.getId(), userId));
-			postDetail.setLike(postDAO.selectLike(post.getId()));
 			postDetail.setId(post.getId());
 			postDetail.setContent(post.getContent());
 			postDetail.setImagePath(post.getImagePath());
 			postDetail.setUserId(post.getUserId());
 			postDetail.setNick_name(user.getNick_name());
+			postDetail.setLikeCount(likeCount);
+			postDetail.setLike(isLike);
+			postDetail.setCommentList(commentList);
 			
 			postDetailList.add(postDetail);
 		}
@@ -56,45 +70,6 @@ public class PostBO {
 		return postDetailList;
 	}
 	
-//  게시물의 댓글 화면에 보이기 진행중
-//	public List<PostComment> getComment() {
-//		
-//		List<Post> postList = postDAO.selectPost();
-//		
-//		List<PostComment> postCommentList = new ArrayList<>();
-//		
-//		for(Post post:postList) {
-//			
-//			User user = userBO.getUserById(post.getUserId());
-//			
-//			postCommentList.addAll( postDAO.selectComment(post.getId()));
-//			
-//			PostComment postComment = new PostComment();
-//			
-//			postComment.setNick_name(user.getNick_name());
-//			
-//			
-//		}
-//		
-//		return postCommentList;
-//	}
-	
-	public int getLike(int postId,int userId) {
-		
-		return postDAO.insertLike(postId, userId);
-	}
-	
-	public Boolean isDuplicateLike(int postId,int userId) {
-		
-		int count = postDAO.selectIsDuplicateLike(postId, userId);
-		
-		return count != 0;
-	}
-	
-	public int unlike(int postId,int userId) {
-		
-		return postDAO.deleteUnlike(postId, userId);
-	}
 	
 	public int postHide(int postId) {
 		
@@ -117,27 +92,10 @@ public class PostBO {
 		return postDAO.updatePost(postId, content, imagePath);
 	}
 	
-	public int commentAdd(int userId, int postId, String Commnet) {
-		return postDAO.insertComment(userId, postId, Commnet);
-	}
+
 	
 
 	
-//  닉네임 가져오기 실패 작품들...	
-//	public User getUser() {
-//		List<Post> list= postDAO.selectPost();
-//		int userId = list.get(1).getUserId();
-//		
-//		return postDAO.selectUser(userId);
-//	}
-//	
-//	public User getUser(int userId) {
-//		return postDAO.selectUser(userId);
-//	}
-//	
-//	public List<User> getUser2() {
-//		return postDAO.selectUser2();
-//	}
 	
 	
 }

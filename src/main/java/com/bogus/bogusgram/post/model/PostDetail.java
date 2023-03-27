@@ -1,5 +1,9 @@
 package com.bogus.bogusgram.post.model;
 
+import java.util.List;
+
+import com.bogus.bogusgram.post.comment.model.Comment;
+
 public class PostDetail {
 	
 	private int id;
@@ -7,29 +11,28 @@ public class PostDetail {
 	private String nick_name;
 	private String content;
 	private String imagePath;
-	private int like;
-	private int likeCheck;
-	private String comment;
+	private int likeCount;
+	private boolean isLike;
+	private List<Comment> commentList;
 	
 	
-	
-	public String getComment() {
-		return comment;
+	public List<Comment> getCommentList() {
+		return commentList;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
 	}
-	public int getLikeCheck() {
-		return likeCheck;
+	public boolean isLike() {
+		return isLike;
 	}
-	public void setLikeCheck(int likeCheck) {
-		this.likeCheck = likeCheck;
+	public void setLike(boolean isLike) {
+		this.isLike = isLike;
 	}
-	public int getLike() {
-		return like;
+	public int getLikeCount() {
+		return likeCount;
 	}
-	public void setLike(int like) {
-		this.like = like;
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 	public int getId() {
 		return id;

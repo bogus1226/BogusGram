@@ -18,102 +18,105 @@
 	<div id="wrap">
 		
 		<c:import url="/WEB-INF/jsp/post/include/header.jsp"/>
-		
-		<section class="main-contents d-flex">
-			<nav class="navBtn">
-				<a href="#" class="btn btn-sm col-3">Profile</a><br>
-				<a href="#" class="btn btn-sm col-3 mt-2">Fallow</a><br>
-				<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
-			</nav>
-			<section class="contents">
-			
-				<!-- 입력 박스 -->
-				<div class="postInputBox border border-warning">
-					<textarea rows="3" placeholder="내용을 입력해주세요" class="form-control" id="contentInput"></textarea>
-					<div class="d-flex justify-content-between">	
-						<div class="file-upload d-flex align-items-center">
-							<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
-							<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
-						</div>
-						<div class="d-flex align-items-center">
-							<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn">upload</button>
-						</div>
-					</div>
-				</div>
-				<!-- 입력 박스 -->
+
+			<section class="main-contents d-flex">
+				<nav class="navBtn">
+					<a href="#" class="btn btn-sm col-3">Profile</a><br>
+					<a href="#" class="btn btn-sm col-3 mt-2">Fallow</a><br>
+					<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
+				</nav>
+				<section class="contents">
 				
-				<!-- 게시물 리스트 -->
-				<c:forEach var="post" items="${postList}">
-					
-					<div class="postInfoBox mt-4">
-						<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
-							<div class="nickname ml-2"><b>${post.nick_name}</b></div>
-							<c:if test="${post.userId eq userId}">
-								<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
-							</c:if>
-						</div> 
-						<div class="d-none hideBtns${post.id}">
-							<div class="postBtns d-flex justify-content-end">
-								<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
-								<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
-								<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
+					<!-- 입력 박스 -->
+					<div class="postInputBox border border-warning">
+						<textarea rows="3" placeholder="내용을 입력해주세요" class="form-control" id="contentInput"></textarea>
+						<div class="d-flex justify-content-between">	
+							<div class="file-upload d-flex align-items-center">
+								<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
+								<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
+							</div>
+							<div class="d-flex align-items-center">
+								<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn">upload</button>
 							</div>
 						</div>
+					</div>
+					<!-- 입력 박스 -->
+					
+					<!-- 게시물 리스트 -->
+					
 						
-						<div class="postInfo">
-							<div class="postImageBox">
-								<c:if test="${not empty post.imagePath}">
-									<div class="postImage mb-1">
-										<img alt="직접올린 사진" src="${post.imagePath}">
-									</div>
+						
+					<c:forEach var="post" items="${postList}">
+						
+						<div class="postInfoBox mt-4">
+							<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
+								<div class="nickname ml-2"><b>${post.nick_name}</b></div>
+								<c:if test="${post.userId eq userId}">
+									<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
 								</c:if>
-								<!-- 좋아요 버튼 -->
-								<div class="d-flex justify-content-end align-items-center">
-									<c:choose>
-										<c:when test="${!post.like}">
-											<i class="like-icon bi bi-heart mt-1 mr-2" data-post-id="${post.id}"></i>
-										</c:when>
-										<c:otherwise>
-											<i class="like-icon bi bi-heart-fill text-danger mt-1 mr-2" data-post-id="${post.id}"></i>
-										</c:otherwise>
-									</c:choose>
-									<div class="mt-1 small"><b>좋아요 ${post.likeCount}개</b></div>
+							</div> 
+							<div class="d-none hideBtns${post.id}">
+								<div class="postBtns d-flex justify-content-end">
+									<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
+									<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
+									<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
 								</div>
-								<!-- 좋아요 버튼 -->
-								
-								<div class="postInfoContent">${post.content}</div>
-								
-								<!-- 댓글달기 -->
-								<div class="comment">
-									<div class="comment-header d-flex align-items-center justify-content-between">
-										<div class="ml-2"><b>comment</b></div>
-										<i class="bi bi-caret-up-fill btn"></i>
-									</div>
-									<div class="commentInfo mt-2">
-										<div class="ml-3">
-											<c:forEach var="comment" items="${post.commentList}">
-												<div class="small mt-1"><b>${comment.nick_name.nick_name}</b> ${comment.comment}</div>
-											</c:forEach>
+							</div>
+							
+							<div class="postInfo">
+								<div class="postImageBox">
+									<c:if test="${not empty post.imagePath}">
+										<div class="postImage mb-1">
+											<img alt="직접올린 사진" src="${post.imagePath}">
 										</div>
-										<div class="d-flex justify-content-center">
-											<div class="input-group col-10 mt-2">
-												<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
-												<div class="input-group-append">
-													<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
+									</c:if>
+									<!-- 좋아요 버튼 -->
+									<div class="d-flex justify-content-end align-items-center">
+										<c:choose>
+											<c:when test="${!post.like}">
+												<i class="like-icon bi bi-heart mt-1 mr-2" data-post-id="${post.id}"></i>
+											</c:when>
+											<c:otherwise>
+												<i class="like-icon bi bi-heart-fill text-danger mt-1 mr-2" data-post-id="${post.id}"></i>
+											</c:otherwise>
+										</c:choose>
+										<div class="mt-1 small"><b>좋아요 ${post.likeCount}개</b></div>
+									</div>
+									<!-- 좋아요 버튼 -->
+									
+									<div class="postInfoContent">${post.content}</div>
+									
+									<!-- 댓글달기 -->
+									<div class="comment">
+										<div class="comment-header d-flex align-items-center justify-content-between">
+											<div class="ml-2"><b>comment</b></div>
+											<i class="bi bi-caret-up-fill btn"></i>
+										</div>
+										<div class="commentInfo mt-2">
+											<div class="ml-3">
+												<c:forEach var="comment" items="${post.commentList}">
+													<div class="small mt-1"><b>${comment.nick_name.nick_name}</b> ${comment.comment}</div>
+												</c:forEach>
+											</div>
+											<div class="d-flex justify-content-center">
+												<div class="input-group col-10 mt-2">
+													<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
+													<div class="input-group-append">
+														<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+									<!-- 댓글달기 -->
 								</div>
-								<!-- 댓글달기 -->
 							</div>
 						</div>
-					</div>
-				</c:forEach>
-				<!-- 게시물 리스트 -->
-				
-			</section>	
-		</section>
+					</c:forEach>
+					<!-- 게시물 리스트 -->
+					
+				</section>	
+			</section>
 		
 		<c:import url="/WEB-INF/jsp/post/include/footer.jsp"/>
 	</div>

@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+#wrap {
+	width:1000px;
+	margin:auto; 
+}
+
+header{
+	height:70px;
+	font-size:40px;
+}
+
+.logo > a {
+	color:rgb(241, 196, 15);
+}
+
+.logo > a:hover {
+	color:rgb(241, 196, 15);
+	text-decoration:none;
+}
+
+.userInfoBox {
+	height:150px;
+}
+
+.userInfoBox > .profileImageBox {
+	width:200px;
+}
+
+.userInfoBox > .buttonBox {
+	width:110px;
+}
+
+.userInfoBox > .countBox {
+	width:650px;
+}
+
+.postInfoBox {
+	width:130px;
+}
+
+.followerInfoBox {
+	width:130px;
+}
+
+.followingInfoBox {
+	width:130px;
+}
+
+.main-contents {
+	height:500px;
+}
+
+.btn {
+	background-color:rgb(243, 115, 102);
+	color:white;	
+}

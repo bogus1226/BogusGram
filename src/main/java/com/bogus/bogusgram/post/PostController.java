@@ -39,6 +39,7 @@ public class PostController {
 			, Model model) {
 		
 		Post post = postBO.getPostInfo(postId);
+
 		model.addAttribute("post", post);
 		
 		return "post/update";

@@ -25,7 +25,7 @@
 					<div class="d-flex justify-content-between">	
 						<div class="file-upload d-flex align-items-center">
 							<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
-							<input id="fileInput" type="file" class="ml-2 mt-1 d-none" value="${post.imagePath}">
+							<input id="fileInput" type="file" class="ml-2 mt-1 d-none">	
 						</div>
 					</div>
 				</div>

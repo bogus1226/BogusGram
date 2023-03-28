@@ -202,7 +202,7 @@
 					, url:"/post/delete"
 					, data:{"postId":postId}
 					, success:function(data){
-						if(data.result == "success") {
+						if(data.result) {
 							location.reload();
 						} else {
 							alert("삭제 실패");

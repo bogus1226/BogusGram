@@ -81,9 +81,15 @@ public class PostBO {
 		return postDAO.updatePostHide(postId);
 	}
 	
-	public int postDelte(int postId) {
+	public boolean postDelte(int postId) {
 		
-		return postDAO.deletePost(postId);
+		int postCount = postDAO.deletePost(postId);
+		
+		commentBO.deletePostAllComment(postId);
+		
+		likeBO.deletePostAllLike(postId);
+		
+		return postCount != 0;
 	}
 	
 	public Post getPostInfo(int postId) {

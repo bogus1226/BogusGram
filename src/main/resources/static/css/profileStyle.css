@@ -20,15 +20,21 @@ header{
 }
 
 .userInfoBox {
-	height:150px;
+	height:100px;
 }
 
 .userInfoBox > .profileImageBox {
 	width:200px;
 }
 
+.profileImageBox > .profileImage {
+	width:100%;
+	height:100%;
+	border-radius:100%;
+}
+
 .userInfoBox > .buttonBox {
-	width:110px;
+	width:100px;
 }
 
 .userInfoBox > .countBox {
@@ -49,6 +55,21 @@ header{
 
 .main-contents {
 	height:500px;
+}
+
+.main-contents > .content {
+	width:800px;
+	height:500px;
+}
+
+.iconButtons > .postIcon {
+	width:50%;
+	height:80px;
+}
+
+.iconButtons > .postPhotoIcon {
+	width:50%;
+	height:80px;
 }
 
 .btn {

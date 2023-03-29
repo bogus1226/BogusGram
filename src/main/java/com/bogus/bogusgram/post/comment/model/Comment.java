@@ -15,7 +15,6 @@ public class Comment {
 	private Date updatedAt;
 	private User nick_name;
 	
-	
 
 	public User getNick_name() {
 		return nick_name;

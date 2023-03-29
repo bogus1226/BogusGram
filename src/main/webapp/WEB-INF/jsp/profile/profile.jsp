@@ -21,11 +21,13 @@
 				<a href="/post/mainpage/view"><b>BogusGram</b></a>
 			</div>
 		</header>
-		<div class="userInfoBox d-flex mt-1	">
+		<div class="userInfoBox d-flex mt-1	mb-3">
 			<div class="profileImageBox">
-				<div class="profileImage border"></div>
+				<div class="profileImage border">
+					<img height="100px" width="200px" alt="프로필 사진" src="/static/image/notphoto.png">
+				</div>
 			</div>
-			<div class="buttonBox">
+			<div class="buttonBox ml-2">
 				<button type="button" class="btn btn-block btn-sm"><b>프로필 편집</b></button>
 				<button type="button" class="btn btn-block btn-sm"><b>숨긴 목록</b></button>
 			</div>
@@ -44,7 +46,16 @@
 				</div>
 			</div>
 		</div>
-		<section class="main-contents bg-success"></section>
+		<section class="main-contents d-flex justify-content-end">
+			<section class="content bg-warning">
+				<div class="iconButtons d-flex">
+					<div class="postIcon bg-danger d-felx justify-content-center">
+						<i class="bi bi-grid-3x3"></i>
+					</div>
+					<div class="postPhotoIcon bg-info"></div>
+				</div>
+			</section>
+		</section>
 	</div>
 </body>
 </html>

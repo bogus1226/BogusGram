@@ -83,11 +83,17 @@ public class PostBO {
 	
 	public boolean postDelte(int postId) {
 		
+		Post post = postDAO.selectPostInfo(postId);
+		
+		FileManagerService.removeFile(post.getImagePath());
+		
 		int postCount = postDAO.deletePost(postId);
 		
 		commentBO.deletePostAllComment(postId);
 		
 		likeBO.deletePostAllLike(postId);
+		
+		
 		
 		return postCount != 0;
 	}

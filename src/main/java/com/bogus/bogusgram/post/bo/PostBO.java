@@ -104,6 +104,11 @@ public class PostBO {
 	}
 	
 	public int postUpdate(int userId, int postId, String content, MultipartFile file) {
+		
+		Post post = postDAO.selectPostInfo(postId);
+		
+		FileManagerService.removeFile(post.getImagePath());
+		
 		String imagePath = FileManagerService.saveFile(userId, file);
 		
 		return postDAO.updatePost(postId, content, imagePath);

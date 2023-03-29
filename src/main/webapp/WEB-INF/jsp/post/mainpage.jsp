@@ -15,6 +15,9 @@
 </head>
 <body>
 	
+	
+	
+		
 	<div id="wrap">
 		
 		<c:import url="/WEB-INF/jsp/post/include/header.jsp"/>
@@ -52,16 +55,30 @@
 							<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
 								<div class="nickname ml-2"><b>${post.nick_name}</b></div>
 								<c:if test="${post.userId eq userId}">
-									<i class="bi bi-three-dots btn hideBtn" data-hidebtn-check="0" data-hide-postid="${post.id}"></i>
+								
+									<!-- Button trigger modal -->
+									<i class="bi bi-three-dots btn hideBtn" data-toggle="modal" data-target="#selectBtns${post.id}"></i>
+									<!-- Button trigger modal -->
+									
+									<!-- Modal -->
+									<div class="modal fade" id="selectBtns${post.id}" >
+									  <div class="modal-dialog modal-dialog-centered">
+									    <div class="modal-content">
+									      <div class="modal-body">
+										  	<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
+											<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
+											<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- Modal -->
+									
 								</c:if>
 							</div> 
-							<div class="d-none hideBtns${post.id}">
-								<div class="postBtns d-flex justify-content-end">
-									<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
-									<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
-									<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
-								</div>
-							</div>
 							
 							<div class="postInfo">
 								<div class="postImageBox">
@@ -199,7 +216,6 @@
 			
 			$(".deleteBtn").on("click", function(){
 				let postId = $(this).data("delete-id");
-
 				$.ajax({
 					type:"get"
 					, url:"/post/delete"
@@ -237,82 +253,12 @@
 					}
 					
 				});
-			});
-				
-/*			$(".likeIcon").on("click", function(){
-				let postId = $(this).data("postid");
-				
-				$.ajax({
-					type:"get"
-					, url:"/post/like/isDuplicate"
-					, data:{"postId":postId}
-					, success:function(data){
-						if(data.is_duplicate) {
-							$.ajax({
-								type:"get"
-								, url:"/post/unlike"
-								, data:{"postId":postId}
-								, success:function(data){
-									if(data.result == "success") {
-										location.reload();
-									} else {
-										alert("좋아요 취소 실패");
-									}	
-								}
-								, error:function(){
-									alert("좋아요 취소 에러");
-								}
-								
-							});
-						} else {
-							$.ajax({
-								type:"get"
-								, url:"/post/like"
-								, data:{"postId":postId}
-								, success:function(data){
-									if(data.result == "success") {
-										location.reload();
-									} else {
-										alert("좋아요 실패");
-									}	
-								}
-								, error:function(){
-									alert("좋아요 에러");
-								}
-								
-							});
-						}	
-					}
-					, error:function(){
-						alert("좋아요 중복확인 에러");
-					}
-					
-				});
-						
-				
-			});  */
-			
+			});		
 			
 			$("#imageIcon").on("click", function(){
 				// file input 을 클릭한 동작을 수행한다.
 				$("#fileInput").click();
 			});		
-		
-			
-		
-			$(".hideBtn").on("click", function(){
-				let hideBtnCheck = $(this).data("hidebtn-check");
-				let id = $(this).data("hide-postid");
-				let btns = ".hideBtns" + id;
-				
-				if(hideBtnCheck == 0) {
-					$(btns).removeClass("d-none");	
-					$(this).data("hidebtn-check", "1");
-				} else {
-					$(btns).addClass("d-none");	
-					$(this).data("hidebtn-check", "0");
-				}
-			});
 	
 			$("#uploadBtn").on("click", function(){
 				let content = $("#contentInput").val();
@@ -322,12 +268,6 @@
 					alert("내용을 입력해주세요");
 					return;
 				}
-				
-				// 파일이 선택되지 않았을 경우의 유효성 검사
-				//if(file.files.length == 0) {
-				//	alert("파일을 선택하세요");
-				//	return;
-				//}
 				
 				var formData = new FormData();
 				formData.append("content",content);

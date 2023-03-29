@@ -95,7 +95,7 @@ textarea::placeholder {
 	background-color:rgb(250, 237, 188);
 }
 
-.postBtns > .btn {
+.modal-body > .btn {
 	background-color:rgb(243, 115, 102);
 	color:white;	
 }

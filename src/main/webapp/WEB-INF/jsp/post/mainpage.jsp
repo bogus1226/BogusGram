@@ -20,25 +20,46 @@
 		<c:import url="/WEB-INF/jsp/post/include/header.jsp"/>
 
 			<section class="main-contents d-flex">
+				
 				<nav class="navBtn">
-					<a href="#" class="btn btn-sm col-3">Profile</a><br>
-					<a href="#" class="btn btn-sm col-3 mt-2">Fallow</a><br>
-					<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
+					<c:if test="${not empty userId}">
+						<a href="#" class="btn btn-sm col-3">Profile</a><br>
+						<a href="#" class="btn btn-sm col-3 mt-2">Fallow</a><br>
+						<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
+					</c:if>
 				</nav>
+				
 				<section class="contents">
 				
 					<!-- 입력 박스 -->
 					<div class="postInputBox border border-warning">
-						<textarea rows="3" placeholder="내용을 입력해주세요" class="form-control" id="contentInput"></textarea>
-						<div class="d-flex justify-content-between">	
-							<div class="file-upload d-flex align-items-center">
-								<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
-								<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
-							</div>
-							<div class="d-flex align-items-center">
-								<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn">upload</button>
-							</div>
-						</div>
+						<c:choose>
+							
+							<c:when test="${not empty userId}">
+								<textarea rows="3" placeholder="내용을 입력해주세요" class="form-control" id="contentInput"></textarea>
+								<div class="d-flex justify-content-between">	
+									<div class="file-upload d-flex align-items-center">
+										<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
+										<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
+									</div>
+									<div class="d-flex align-items-center">
+										<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn">upload</button>
+									</div>
+								</div>
+							</c:when>
+							
+							<c:otherwise>
+								<textarea rows="3" placeholder="로그인후 이용해주세요" class="form-control bg-white" disabled></textarea>
+								<div class="d-flex justify-content-between">	
+									<div class="file-upload d-flex align-items-center">
+										<i class="bi bi-card-image image-icon-size ml-2"></i>
+									</div>
+									<div class="d-flex align-items-center">
+										<button type="button" class="btn btn-sm mr-2 mb-1" id="uploadBtn" disabled>upload</button>
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<!-- 입력 박스 -->
 					
@@ -69,14 +90,16 @@
 									</c:if>
 									<!-- 좋아요 버튼 -->
 									<div class="d-flex justify-content-end align-items-center">
-										<c:choose>
-											<c:when test="${!post.like}">
-												<i class="like-icon bi bi-heart mt-1 mr-2" data-post-id="${post.id}"></i>
-											</c:when>
-											<c:otherwise>
-												<i class="like-icon bi bi-heart-fill text-danger mt-1 mr-2" data-post-id="${post.id}"></i>
-											</c:otherwise>
-										</c:choose>
+										<c:if test="${not empty userId}">
+											<c:choose>
+												<c:when test="${!post.like}">
+													<i class="like-icon bi bi-heart mt-1 mr-2" data-post-id="${post.id}"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="like-icon bi bi-heart-fill text-danger mt-1 mr-2" data-post-id="${post.id}"></i>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
 										<div class="mt-1 small"><b>좋아요 ${post.likeCount}개</b></div>
 									</div>
 									<!-- 좋아요 버튼 -->
@@ -97,10 +120,21 @@
 											</div>
 											<div class="d-flex justify-content-center">
 												<div class="input-group col-10 mt-2">
-													<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
-													<div class="input-group-append">
-														<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
-													</div>
+													<c:choose>
+														<c:when test="${not empty userId}">
+															<input type="text" class="form-control" id="comment${post.id}" placeholder="내용을 입력해주세요">
+															<div class="input-group-append">
+																<button class="commentBtn btn commentBtn" type="button" data-comment-id="${post.id}">게시</button>
+															</div>
+														</c:when>
+														
+														<c:otherwise>
+															<input type="text" class="form-control bg-white" placeholder="로그인후 이용해주세요" disabled>
+															<div class="input-group-append">
+																<button class="commentBtn btn commentBtn" type="button" disabled>게시</button>
+															</div>
+														</c:otherwise>
+													</c:choose>
 												</div>
 											</div>
 										</div>

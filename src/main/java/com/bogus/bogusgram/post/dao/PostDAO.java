@@ -23,9 +23,13 @@ public interface PostDAO {
 	
 	public int updatePostHide(@Param("postId") int postId);
 	
-	public int deletePost(@Param("postId") int postId);
+	public int deletePost(
+			@Param("postId") int postId
+			, @Param("userId") int userId);
 	
-	public Post selectPostInfo(@Param("postId") int postId);
+	public Post selectPostInfo(
+			@Param("postId") int postId
+			, @Param("userId") int userId);
 	
 	public int updatePost(
 			@Param("postId") int postId 

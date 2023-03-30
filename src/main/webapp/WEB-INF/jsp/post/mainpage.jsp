@@ -14,9 +14,6 @@
 <title>메인화면</title>
 </head>
 <body>
-	
-	
-	
 		
 	<div id="wrap">
 		
@@ -57,26 +54,9 @@
 								<c:if test="${post.userId eq userId}">
 								
 									<!-- Button trigger modal -->
-									<i class="bi bi-three-dots btn hideBtn" data-toggle="modal" data-target="#selectBtns${post.id}"></i>
+									<i class="bi bi-three-dots btn iconBtn" data-toggle="modal" data-target="#selectBtns" data-post-id="${post.id}"></i>
 									<!-- Button trigger modal -->
-									
-									<!-- Modal -->
-									<div class="modal fade" id="selectBtns${post.id}" >
-									  <div class="modal-dialog modal-dialog-centered">
-									    <div class="modal-content">
-									      <div class="modal-body">
-										  	<button type="button" class="btn btn-sm mr-2 hideButton" data-this-id="${post.id}">숨기기</button>
-											<a class="btn btn-sm mr-2" href="/post/update/view?postId=${post.id}">수정하기</a>
-											<button type="button" class="btn btn-sm deleteBtn" data-delete-id="${post.id}">삭제하기</button>
-									      </div>
-									      <div class="modal-footer">
-									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-									<!-- Modal -->
-									
+			
 								</c:if>
 							</div> 
 							
@@ -138,8 +118,79 @@
 		<c:import url="/WEB-INF/jsp/post/include/footer.jsp"/>
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal fade" id="selectBtns" >
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-body">
+		  	<button type="button" class="btn btn-sm mr-2" id="hideButton">숨기기</button>
+			<a class="btn btn-sm mr-2" href="#" id="updateBtn">수정하기</a>
+			<button type="button" class="btn btn-sm" id="deleteBtn">삭제하기</button>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal -->
+	
 	<script>
 		$(document).ready(function(){
+			
+			$("#deleteBtn").on("click", function(){
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/delete"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result) {
+							location.reload();
+						} else {
+							alert("삭제 실패");
+						}	
+					}
+					, error:function(){
+						alert("삭제 에러");
+					}
+					
+				});
+			});
+			
+			$("#hideButton").on("click", function(){
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/hide"
+					, data:{"postId":postId}
+					, success:function(data){
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("숨기기 실패");
+						}	
+					}
+					, error:function(){
+						alert("숨기기 에러");
+					}
+					
+				});
+			});	
+			
+			$(".iconBtn").on("click", function(){
+				
+				let postId = $(this).data("post-id");
+				
+				$("#deleteBtn").data("post-id", postId);
+				
+				$("#hideButton").data("post-id", postId);	
+				
+				$("#updateBtn").attr("href", "/post/update/view?postId=" + postId);	
+			});
+			
 			
 			$(".like-icon").on("click", function(){
 				let postId = $(this).data("post-id");
@@ -214,46 +265,6 @@
 				});
 			});
 			
-			$(".deleteBtn").on("click", function(){
-				let postId = $(this).data("delete-id");
-				$.ajax({
-					type:"get"
-					, url:"/post/delete"
-					, data:{"postId":postId}
-					, success:function(data){
-						if(data.result) {
-							location.reload();
-						} else {
-							alert("삭제 실패");
-						}	
-					}
-					, error:function(){
-						alert("삭제 에러");
-					}
-					
-				});
-			});
-			
-			$(".hideButton").on("click", function(){
-				let postId = $(this).data("this-id");
-				
-				$.ajax({
-					type:"get"
-					, url:"/post/hide"
-					, data:{"postId":postId}
-					, success:function(data){
-						if(data.result == "success") {
-							location.reload();
-						} else {
-							alert("숨기기 실패");
-						}	
-					}
-					, error:function(){
-						alert("숨기기 에러");
-					}
-					
-				});
-			});		
 			
 			$("#imageIcon").on("click", function(){
 				// file input 을 클릭한 동작을 수행한다.

@@ -12,7 +12,6 @@ import com.bogus.bogusgram.post.comment.bo.CommentBO;
 import com.bogus.bogusgram.post.comment.model.Comment;
 import com.bogus.bogusgram.post.dao.PostDAO;
 import com.bogus.bogusgram.post.like.bo.LikeBO;
-import com.bogus.bogusgram.post.like.dao.LikeDAO;
 import com.bogus.bogusgram.post.model.Post;
 import com.bogus.bogusgram.post.model.PostDetail;
 import com.bogus.bogusgram.user.bo.UserBO;
@@ -81,37 +80,46 @@ public class PostBO {
 		return postDAO.updatePostHide(postId);
 	}
 	
-	public boolean postDelte(int postId) {
+	public boolean postDelte(int postId, int userId) {
 		
-		Post post = postDAO.selectPostInfo(postId);
+		Post post = postDAO.selectPostInfo(postId, userId);
 		
-		FileManagerService.removeFile(post.getImagePath());
+		if(post != null) {
+			
+			FileManagerService.removeFile(post.getImagePath());
+			
+			int postCount = postDAO.deletePost(postId, userId);
+			
+			commentBO.deletePostAllComment(postId);
+			
+			likeBO.deletePostAllLike(postId);
+			
+			return postCount != 0;
+		}
 		
-		int postCount = postDAO.deletePost(postId);
+		return false;
 		
-		commentBO.deletePostAllComment(postId);
-		
-		likeBO.deletePostAllLike(postId);
-		
-		
-		
-		return postCount != 0;
 	}
 	
-	public Post getPostInfo(int postId) {
+	public Post getPostInfo(int postId, int userId) {
 		
-		return postDAO.selectPostInfo(postId);
+		return postDAO.selectPostInfo(postId, userId);
 	}
 	
 	public int postUpdate(int userId, int postId, String content, MultipartFile file) {
 		
-		Post post = postDAO.selectPostInfo(postId);
+		Post post = postDAO.selectPostInfo(postId, userId);
 		
-		FileManagerService.removeFile(post.getImagePath());
+		if(post != null) {
+			
+			FileManagerService.removeFile(post.getImagePath());
+			
+			String imagePath = FileManagerService.saveFile(userId, file);
+			
+			return postDAO.updatePost(postId, content, imagePath);	
+		}
 		
-		String imagePath = FileManagerService.saveFile(userId, file);
-		
-		return postDAO.updatePost(postId, content, imagePath);
+		return 0;
 	}
 	
 	

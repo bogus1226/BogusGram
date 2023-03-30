@@ -35,10 +35,14 @@ public class PostController {
 	}
 	
 	@GetMapping("/update/view")
-	public String postUpdate(@RequestParam("postId") int postId
-			, Model model) {
+	public String postUpdate(
+			@RequestParam("postId") int postId
+			, Model model
+			, HttpSession session) {
 		
-		Post post = postBO.getPostInfo(postId);
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		Post post = postBO.getPostInfo(postId, userId);
 
 		model.addAttribute("post", post);
 		

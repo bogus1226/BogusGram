@@ -127,5 +127,46 @@ public class PostBO {
 		return 0;
 	}
 	
+	public List<PostDetail> getPostByUserId(int userId) {
+		
+		// 컨트롤러에서 원하는 (jsp에서 사용할) 데이터 형태를 만들어 준다.
+		List<Post> postList = postDAO.selectPostByUserId(userId);
+		
+		List<PostDetail> postDetailList = new ArrayList<>();
+		
+		for(Post post:postList) {
+			
+			User user = userBO.getUserById(post.getUserId());
+			
+			PostDetail postDetail = new PostDetail();
+			int likeCount = likeBO.getListCount(post.getId());
+			boolean isLike = false;
+			isLike = likeBO.isDuplicateLike(userId, post.getId());	
+			List<Comment> commentList = commentBO.getCommentList(post.getId());
+			
+			for(Comment comment:commentList) {
+				User userNickName = userBO.getUserById(comment.getUserId()); 
+				comment.setNick_name(userNickName);
+			}
+			
+			postDetail.setId(post.getId());
+			postDetail.setContent(post.getContent());
+			postDetail.setImagePath(post.getImagePath());
+			postDetail.setUserId(post.getUserId());
+			postDetail.setNick_name(user.getNick_name());
+			postDetail.setLikeCount(likeCount);
+			postDetail.setLike(isLike);
+			postDetail.setCommentList(commentList);
+			
+			postDetailList.add(postDetail);
+		}
+		
+		return postDetailList;
+	}
+	
+	public int countPostList(int userId) {
+		return postDAO.selectPostCount(userId);
+	}
+	
 	
 }

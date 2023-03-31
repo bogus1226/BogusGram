@@ -68,5 +68,14 @@
 		WHERE
 			`id` = #{id}
 	</select>
+	
+	<update id="updateUserInfo" parameterType="map">
+		UPDATE
+			`user`
+		SET
+			
+		WHERE
+			
+	</update>
 
 </mapper>

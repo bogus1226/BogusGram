@@ -17,9 +17,7 @@ public interface PostDAO {
 	
 	public List<Post> selectPost(); 
 	
-	
 	public int selectIsDuplicateLike(@Param("postId") int postId, @Param("userId") int userId);
-	
 	
 	public int updatePostHide(@Param("postId") int postId);
 	
@@ -36,4 +34,9 @@ public interface PostDAO {
 			,@Param("content") String content
 			,@Param("file") String file);
 	
+	public List<Post> selectPostByUserId(
+			@Param("userId") int userId); 
+	
+	public int selectPostCount(
+			@Param("userId") int userId);
 }

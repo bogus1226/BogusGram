@@ -2,6 +2,7 @@ package com.bogus.bogusgram.user.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.common.EncryptService;
 import com.bogus.bogusgram.user.dao.UserDAO;
@@ -43,5 +44,8 @@ public class UserBO {
 		return userDAO.selectUserById(userId);
 	}
 	
+	public int updateUserInfo(String name, String nickName, MultipartFile file) {
+		
+	}
 	
 }

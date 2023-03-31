@@ -22,4 +22,8 @@ public interface UserDAO {
 	
 	public User selectUserById(@Param("id") int id);
 	
+	public int updateUserInfo(
+			@Param("name") String name
+			, @Param("nickName") String nickName
+			, @Param("profileImg") String profileImg);
 }

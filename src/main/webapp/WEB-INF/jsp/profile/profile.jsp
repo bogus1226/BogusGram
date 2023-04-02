@@ -18,25 +18,53 @@
 
 	<div id="wrap2">
 		<header class="header2 d-flex justify-content-between align-items-end">
-			<div class="nickName"><b>bogus</b></div>
+			<div class="nickName"><b>${user.nick_name}</b></div>
 			<div class="logo2">
 				<a href="/post/mainpage/view"><b>BogusGram</b></a>
 			</div>
 		</header>
-		<div class="userInfoBox2 d-flex mt-1	mb-3">
+		<div class="userInfoBox2 d-flex mt-1 mb-3">
 			<div class="profileImageBox2">
 				<div class="profileImage2 border">
-					<img height="100px" width="200px" alt="프로필 사진" src="/static/image/notphoto.png">
+					<c:choose>
+						<c:when test="${not empty user.profile_img}">
+							<img alt="프로필 사진" src="${user.profile_img}">
+						</c:when>
+						<c:otherwise>
+							<img alt="프로필 사진" src="/static/image/notphoto.png">
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${not empty userId and (isDuplicateFollow ne 0)}">
+						<h5 class="text-center followingText"><b>팔로잉</b></h5>
+					</c:if>
 				</div>
 			</div>
 			<div class="buttonBox2 ml-2">
-				<a type="button" class="btn btn-block btn-sm" href="/profile/update/view?userId=${userId}"><b>프로필 편집</b></a>
-				<button type="button" class="btn btn-block btn-sm"><b>숨긴 목록</b></button>
+				<c:if test="${not empty userId}">
+					<c:choose>
+						<c:when test="${userId eq profileUserId}">
+							<a type="button" class="btn btn-block btn-sm" href="/profile/update/view?userId=${userId}"><b>프로필 편집</b></a>
+							<button type="button" class="btn btn-block btn-sm" id="hidePostButton"><b>숨긴 목록</b></button>
+							<button type="button" class="btn btn-block btn-sm d-none" id="notHidePostButton"><b>게시물</b></button>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${isDuplicateFollow eq 0}">
+									<button type="button" class="btn btn-block btn-sm" id="fallowBtn" data-userid="${userId}" data-followid="${profileUserId}"><b>팔로우</b></button>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-block btn-sm m-0" id="unFallowBtn" data-userid="${userId}" data-followid="${profileUserId}"><b>팔로우 취소</b></button>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 			</div>
 			<div class="countBox2 d-flex justify-content-center text-center">
 				<div class="postInfoBox2">
 					<h5><b>게시물</b></h5>
-					<h5><b>${postCount}</b></h5>
+					<h5 id="postCount"><b>${postCount}</b></h5>
+					<h5 id="postHideCount" class="d-none"><b>${postHideCount}</b></h5>
 				</div>
 				<div class="followerInfoBox2">
 					<h5><b>팔로워</b></h5>
@@ -53,20 +81,56 @@
 				<div class="iconButtons2 d-flex">
 					<div class="postIcon2">
 						<div class="d-flex justify-content-center align-items-center">
-							<i class="bi bi-grid-3x3 post-icon2"></i>
+							<i class="bi bi-grid-3x3 post-icon2" id="profilePostIcon"></i>
 						</div>
-						<hr class="mt-0">
+						<hr class="mt-0" id="profileHr">
 					</div>
 					<div class="postPhotoIcon2">
 						<div class="d-flex justify-content-center align-items-center">
-							<i class="bi bi-camera-fill post-icon2"></i>
+							<i class="bi bi-camera-fill post-icon2" id="profilePostPhotoIcon"></i>
 						</div>
-						<hr class="mt-0 d-none">
+						<hr class="mt-0 d-none" id="profilePhotoHr">
 					</div>
 				</div>
 				
 				<section class="contents">
-					<c:import url="/WEB-INF/jsp/post/include/postList.jsp"/>
+					<div id="postList">
+						<div id="postNotHideList">
+							<c:import url="/WEB-INF/jsp/post/include/postList.jsp"/>
+						</div>
+						
+						<div class="d-none" id="postHideList">
+							<c:import url="/WEB-INF/jsp/post/include/postHideList.jsp"/>
+						</div>
+					</div>
+					
+					<div class="d-none mt-3" id="postPhotoList">
+						<div>
+							<div id="notHidePhotoList">
+								<div class="d-flex flex-wrap">
+									<c:forEach var="post" items="${postList}">
+										<c:if test="${not empty post.imagePath}">
+											<div class="photoBox border mr-3 mt-2">
+												<img alt="게시물 사진" src="${post.imagePath}" class="postPhoto">
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
+							
+							<div class="d-none" id="hidePhotoList">
+								<div class="d-flex flex-wrap">
+									<c:forEach var="post" items="${postHideList}">
+										<c:if test="${not empty post.imagePath}">
+											<div class="photoBox border mr-3 mt-2">
+												<img alt="게시물 사진" src="${post.imagePath}" class="postPhoto">
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
 				</section>
 			</section>
 		</section>
@@ -88,10 +152,140 @@
 	  </div>
 	</div>
 	<!-- Modal -->
+	
+	<!-- Modal -->
+	<div class="modal fade" id="selectBtn" >
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-body">
+		  	<button type="button" class="btn btn-sm mr-2" id="cancleHideButton">숨기기 취소</button>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal -->
 </body>
 
 <script>
 	$(document).ready(function(){
+		
+		$("#carentDownBtn").on("click", function(){
+			$("#carentDownBtn").addClass("d-none");
+			$("#shortComment").addClass("d-none");
+			$("#carentUpBtn").removeClass("d-none");
+			$("#longComment").removeClass("d-none");
+		});
+		
+		$("#carentUpBtn").on("click", function(){
+			$("#carentDownBtn").removeClass("d-none");
+			$("#shortComment").removeClass("d-none");
+			$("#carentUpBtn").addClass("d-none");
+			$("#longComment").addClass("d-none");
+		});
+		
+		$("#fallowBtn").on("click" , function(){
+			let userId = $(this).data("userid");
+			let followId = $(this).data("followid");
+			
+			$.ajax({
+				type:"get"
+				, url:"/profile/follow"
+				, data:{"userId":userId, "followUserId":followId}
+				, success:function(data){
+					if(data.result) {
+						location.reload();
+					} else {
+						alert("팔로우 실패");
+					}	
+				}
+				, error:function(){
+					alert("팔로우 에러");
+				}
+				
+			});
+		});
+		
+		$("#unFallowBtn").on("click" , function(){
+			let userId = $(this).data("userid");
+			let followId = $(this).data("followid");
+			
+			$.ajax({
+				type:"get"
+				, url:"/profile/unfollow"
+				, data:{"userId":userId, "followUserId":followId}
+				, success:function(data){
+					if(data.result) {
+						location.reload();
+					} else {
+						alert("팔로우 취소 실패");
+					}	
+				}
+				, error:function(){
+					alert("팔로우 취소 에러");
+				}
+				
+			});
+		});
+		
+		$("#hidePostButton").on("click", function(){
+			$("#hidePostButton").addClass("d-none");
+			$("#notHidePostButton").removeClass("d-none");
+			$("#postHideList").removeClass("d-none");
+			$("#postNotHideList").addClass("d-none");
+			$("#notHidePhotoList").addClass("d-none");
+			$("#hidePhotoList").removeClass("d-none");
+			$("#postCount").addClass("d-none");
+			$("#postHideCount").removeClass("d-none");
+		});
+		
+		$("#notHidePostButton").on("click", function(){
+			$("#notHidePostButton").addClass("d-none");
+			$("#hidePostButton").removeClass("d-none");
+			$("#postHideList").addClass("d-none");
+			$("#postNotHideList").removeClass("d-none");
+			$("#notHidePhotoList").removeClass("d-none");
+			$("#hidePhotoList").addClass("d-none");
+			$("#postCount").removeClass("d-none");
+			$("#postHideCount").addClass("d-none");
+		});
+		
+		$("#profilePostPhotoIcon").on("click", function(){
+			$("#profileHr").addClass("d-none");
+			$("#profilePhotoHr").removeClass("d-none");
+			$("#postList").addClass("d-none");
+			$("#postPhotoList").removeClass("d-none");
+		});
+		
+		$("#profilePostIcon").on("click", function(){	
+			$("#profilePhotoHr").addClass("d-none");
+			$("#profileHr").removeClass("d-none");
+			$("#postList").removeClass("d-none");
+			$("#postPhotoList").addClass("d-none");
+		});
+		
+		$("#cancleHideButton").on("click", function(){
+			let postId = $(this).data("post-id");
+			
+			$.ajax({
+				type:"get"
+				, url:"/profile/cancle/hide"
+				, data:{"postId":postId}
+				, success:function(data){
+					if(data.result) {
+						location.reload();
+					} else {
+						alert("숨기기 취소 실패");
+					}	
+				}
+				, error:function(){
+					alert("숨기기 취소 에러");
+				}
+				
+			});
+		});
 		
 		$("#deleteBtn").on("click", function(){
 			let postId = $(this).data("post-id");
@@ -144,6 +338,8 @@
 			$("#hideButton").data("post-id", postId);	
 			
 			$("#updateBtn").attr("href", "/post/update/view?postId=" + postId);	
+			
+			$("#cancleHideButton").data("post-id", postId);	
 		});
 		
 		

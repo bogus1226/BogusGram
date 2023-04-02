@@ -37,6 +37,14 @@ public interface PostDAO {
 	public List<Post> selectPostByUserId(
 			@Param("userId") int userId); 
 	
+	public List<Post> selectPostHideByUserId(
+			@Param("userId") int userId); 
+	
 	public int selectPostCount(
 			@Param("userId") int userId);
+	
+	public int selectHidePostCount(
+			@Param("userId") int userId);
+	
+	public int updateHideInfo(@Param("postId") int postId);
 }

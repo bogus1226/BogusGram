@@ -3,12 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<header class="d-flex">
 			<div class="search pt-2">
-				<div class="input-group col-8  p-0 mt-4">
-					<input type="text" class="form-control" placeholder="사용자 검색">
-					<div class="input-group-append">
-						<button class="searchBtn btn" type="button"><img alt="돋보기모양 아이콘" width="20" src="/static/image/search.png"></button>
-					</div>
-				</div>
+				
 			</div>
 			
 			<div class="logo d-flex justify-content-center align-items-center">

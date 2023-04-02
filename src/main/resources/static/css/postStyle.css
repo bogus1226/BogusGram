@@ -203,6 +203,12 @@ hr {
 	border-radius:100%;
 }
 
+.profileImage2 > img {
+	width:100%;
+	height:100%;
+	border-radius:100%;
+}
+
 .userInfoBox2 > .buttonBox2 {
 	width:100px;
 }
@@ -226,6 +232,10 @@ hr {
 
 .main-contents2 > .content2 {
 	width:800px;
+}
+
+.content2 > .contents {
+	width:550px;
 }
 
 .iconButtons2 > .postIcon2 {
@@ -252,5 +262,41 @@ hr {
 	height:215px;
 	margin:auto;
 	background-color:rgb(250, 237, 188);
+}
+
+.photoBox {
+	width:250px;
+	height:200px;
+}
+
+.photoBox > .postPhoto {
+	width:250px;
+	height:200px;
+}
+
+#postPhotoList {
+	width:800px;
+}
+
+.followingText {
+	color:rgb(241, 196, 15);
+}
+
+.postInfoBoxHeader > a {
+	color:black;
+}
+
+.postInfoBoxHeader > a:hover {
+	color:rgb(241, 196, 15);
+	text-decoration:none;
+}
+
+.commentInfoBox > a {
+	color:black;
+}
+
+.commentInfoBox > a:hover {
+	color:rgb(241, 196, 15);
+	text-decoration:none;
 }
 

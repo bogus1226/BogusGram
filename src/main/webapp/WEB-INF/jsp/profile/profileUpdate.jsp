@@ -18,13 +18,13 @@
 		<c:import url="/WEB-INF/jsp/post/include/header.jsp"/>
 		<div id="profileUpdateBox" class="d-flex justify-content-center">
 			<div class="col-10">
-				<input type="text" class="form-control mt-4" placeholder="이름" value="${userInfo.name}">
-				<input type="text" class="form-control mt-2" placeholder="닉네임" value="${userInfo.nick_name}">
+				<input type="text" class="form-control mt-4" placeholder="이름" value="${userInfo.name}" id="nameInput">
+				<input type="text" class="form-control mt-2" placeholder="닉네임" value="${userInfo.nick_name}" id="nickNameInput">
 				<i id="imageIcon" class="bi bi-card-image image-icon-size ml-2"></i>
 				<input id="fileInput" type="file" class="ml-2 mt-1 d-none">
 				<div class="updateClickBtn d-flex justify-content-between">
 					<a type="button" class="btn commentBtn" href="/profile/view?userId=${userInfo.id}">취소</a>
-					<button type="button" class="btn commentBtn">확인</button>
+					<button type="button" class="btn commentBtn" id="insertBtn" data-userid="${userInfo.id}">확인</button>
 				</div>
 			</div>
 		</div>
@@ -33,9 +33,50 @@
 
 <script>
 	$(document).ready(function(){
+		
 		$("#imageIcon").on("click", function(){
 			$("#fileInput").click();
 		});	
+		
+		$("#insertBtn").on("click", function(){
+			let userId = $(this).data("userid");
+			let name = $("#nameInput").val();
+			let nickName = $("#nickNameInput").val();
+			let img = $("#fileInput")[0];
+			
+			if(name == "") {
+				alert("이름을 입력해주세요");
+			}
+			
+			if(nickName == "") {
+				alert("닉네임을 입력해주세요");
+			}
+			
+			var formData = new FormData();
+			formData.append("name", name);
+			formData.append("nickName", nickName);
+			formData.append("profileImg", img.files[0]);
+
+			$.ajax({
+				type:"post"
+				, url:"/profile/update"
+				, data:formData
+				, enctype:"multipart/form-data" // 파일 업로드 필수
+				, processData:false // 파일 업로드 필수
+				, contentType:false // 파일 업로드 필수
+				, success:function(data){
+					if(data.result == "success") {
+						location.href = "/profile/view?userId=" + userId;
+					} else {
+						alert("수정 실패");
+					}	
+				}
+				, error:function(){
+					alert("수정 에러");
+				}
+				
+			});
+		});
 		
 	});
 </script>

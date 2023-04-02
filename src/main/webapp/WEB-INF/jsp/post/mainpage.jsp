@@ -23,9 +23,7 @@
 				
 				<nav class="navBtn">
 					<c:if test="${not empty userId}">
-						<a href="/profile/view?userId=${userId}" class="btn btn-sm col-3">Profile</a><br>
-						<a href="#" class="btn btn-sm col-3 mt-2">Fallow</a><br>
-						<a href="#" class="btn btn-sm col-3 mt-2">Comment</a>
+						<a href="/profile/view?userId=${userId}" class="btn btn-sm col-3">내 프로필</a><br>
 					</c:if>
 				</nav>
 				
@@ -92,6 +90,20 @@
 	
 	<script>
 		$(document).ready(function(){
+			
+			$("#carentDownBtn").on("click", function(){
+				$("#carentDownBtn").addClass("d-none");
+				$("#shortComment").addClass("d-none");
+				$("#carentUpBtn").removeClass("d-none");
+				$("#longComment").removeClass("d-none");
+			});
+			
+			$("#carentUpBtn").on("click", function(){
+				$("#carentDownBtn").removeClass("d-none");
+				$("#shortComment").removeClass("d-none");
+				$("#carentUpBtn").addClass("d-none");
+				$("#longComment").addClass("d-none");
+			});
 			
 			$("#deleteBtn").on("click", function(){
 				let postId = $(this).data("post-id");

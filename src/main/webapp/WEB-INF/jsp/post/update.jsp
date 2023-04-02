@@ -34,7 +34,7 @@
 		
 		<div class="main-contents d-flex justify-content-center">
 			<div class="contents d-flex justify-content-between mt-3">
-				<a href="/post/mainpage/view" class="btn">취소</a>
+				<a href="javascript:window.history.back();" class="btn">취소</a>
 				<button type="button" class="btn" id="updateBtn" data-post-id="${post.id}">완료</button>
 			</div>
 		</div>
@@ -64,12 +64,12 @@
 				type:"post"
 				, url:"/post/update"
 				, data:formData
-				, enctype:"multipart/form-data" // 파일 업로드 필수
-				, processData:false // 파일 업로드 필수
-				, contentType:false // 파일 업로드 필수
+				, enctype:"multipart/form-data" 
+				, processData:false 
+				, contentType:false 
 				, success:function(data){
 					if(data.result == "success") {
-						location.href = "/post/mainpage/view";
+						location.href = document.referrer;
 					} else {
 						alert("수정 실패");
 					}	
@@ -79,6 +79,7 @@
 				}
 				
 			});
+			
 		});
 	});	
 </script>		

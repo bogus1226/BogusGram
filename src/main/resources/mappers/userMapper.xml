@@ -73,9 +73,12 @@
 		UPDATE
 			`user`
 		SET
-			
+			`name` = #{name}
+			, `nick_name` = #{nickName}
+			, `profile_img` = #{profileImg}
+			, updatedAt = now()
 		WHERE
-			
+			`id` = #{id}
 	</update>
 
 </mapper>

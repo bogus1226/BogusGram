@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.post.bo.PostBO;
-import com.bogus.bogusgram.post.comment.bo.CommentBO;
-import com.bogus.bogusgram.post.like.bo.LikeBO;
 
 @RestController
 @RequestMapping("/post")

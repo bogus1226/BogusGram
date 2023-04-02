@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:forEach var="post" items="${postList}">
+<c:forEach var="post" items="${postHideList}">
 						
 	<div class="postInfoBox mt-4">
 		<div class="postInfoBoxHeader d-flex align-items-center justify-content-between">
-			<a href="/profile/view?userId=${post.userId}" class="nickname ml-2"><b>${post.nick_name}</b></a>
+			<div class="nickname ml-2"><b>${post.nick_name}</b></div>
 			<c:if test="${post.userId eq userId}">
 			
 				<!-- Button trigger modal -->
-				<i class="bi bi-three-dots btn iconBtn" data-toggle="modal" data-target="#selectBtns" data-post-id="${post.id}"></i>
+				<i class="bi bi-three-dots btn iconBtn" data-toggle="modal" data-target="#selectBtn" data-post-id="${post.id}"></i>
 				<!-- Button trigger modal -->
 	
 			</c:if>

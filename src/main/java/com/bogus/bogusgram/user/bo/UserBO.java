@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bogus.bogusgram.common.EncryptService;
+import com.bogus.bogusgram.common.FileManagerService;
 import com.bogus.bogusgram.user.dao.UserDAO;
 import com.bogus.bogusgram.user.model.User;
 
@@ -44,8 +45,11 @@ public class UserBO {
 		return userDAO.selectUserById(userId);
 	}
 	
-	public int updateUserInfo(String name, String nickName, MultipartFile file) {
+	public int updateUserInfo(int userId, String name, String nickName, MultipartFile file) {
 		
+		String imagePath = FileManagerService.saveFile(userId, file);
+		
+		return userDAO.updateUserInfo(userId, name, nickName, imagePath);
 	}
 	
 }

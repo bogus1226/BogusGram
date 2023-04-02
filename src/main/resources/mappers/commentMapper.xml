@@ -36,6 +36,9 @@
 			`comment`
 		WHERE
 			`postId` = #{postId}
+		ORDER BY
+			`id`
+		DESC
 	</select>
 	
 	<delete id="deletePostAllComment" parameterType="int">

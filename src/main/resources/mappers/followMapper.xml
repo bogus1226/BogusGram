@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bogus.bogusgram.profile.follow.dao.FollowDAO">
+
+	<insert id="insertFollow" parameterType="map">
+		INSERT INTO
+			`follow`
+		(
+			`userId`
+			, `following_userId`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUE
+		(
+			#{userId}
+			, #{followUserId}
+			, now()
+			, now()
+		)
+	</insert>
+	
+	<delete id="deleteFollow" parameterType="int">
+		DELETE FROM 
+			`follow`  
+		WHERE
+		  	`userId` = #{userId}
+		 AND 
+		 	`following_userId` = #{followUserId}
+	</delete>
+	
+	
+	<select id="isDuplicateFollow" parameterType="int" resultType="int">
+		SELECT
+			count(1)
+		FROM 
+		 	`follow`
+		 WHERE
+		  	`userId` = #{userId}
+		 AND 
+		 	`following_userId` = #{followUserId}
+	</select>
+
+</mapper>
